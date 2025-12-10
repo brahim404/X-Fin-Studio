@@ -41,11 +41,11 @@ const Escompte = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="container mx-auto px-4">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">📄 Escompte Commercial</h1>
-          <p className="text-gray-600">
+    <div className="min-h-screen bg-dark-900 py-8">
+      <div className="container mx-auto px-6">
+        <div className="mb-8 animate-fade-in">
+          <h1 className="text-3xl font-bold text-white mb-2">Escompte Commercial</h1>
+          <p className="text-gray-400">
             Générez un bordereau d'escompte et calculez la valeur actuelle de vos effets
           </p>
         </div>
@@ -66,18 +66,18 @@ const Escompte = () => {
               />
 
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-300 mb-2">
                   Effets de Commerce
                 </label>
                 {effets.map((effet, index) => (
-                  <div key={index} className="mb-3 p-3 bg-gray-50 rounded-lg">
+                  <div key={index} className="mb-3 p-3 bg-dark-700/50 border border-dark-600/50">
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm font-medium text-gray-700">Effet #{index + 1}</span>
+                      <span className="text-sm font-medium text-gray-300">Effet #{index + 1}</span>
                       {effets.length > 1 && (
                         <button
                           type="button"
                           onClick={() => removeEffet(index)}
-                          className="text-red-500 hover:text-red-700 text-sm"
+                          className="text-accent-400 hover:text-accent-300 text-sm"
                         >
                           Supprimer
                         </button>
@@ -86,10 +86,10 @@ const Escompte = () => {
                     <div className="space-y-2">
                       <input
                         type="number"
-                        placeholder="Valeur nominale (€)"
+                        placeholder="Valeur nominale (TND)"
                         value={effet.valeur}
                         onChange={(e) => handleEffetChange(index, 'valeur', e.target.value)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+                        className="w-full px-3 py-2 bg-dark-800 border border-dark-600 text-gray-100 text-sm focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500 outline-none"
                         min="0"
                         step="100"
                         required
@@ -99,7 +99,7 @@ const Escompte = () => {
                         placeholder="Nombre de jours"
                         value={effet.jours}
                         onChange={(e) => handleEffetChange(index, 'jours', e.target.value)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+                        className="w-full px-3 py-2 bg-dark-800 border border-dark-600 text-gray-100 text-sm focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500 outline-none"
                         min="1"
                         max="360"
                         required
@@ -132,27 +132,27 @@ const Escompte = () => {
                   }
                 >
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                    <div className="text-center p-4 bg-blue-50 rounded-lg">
-                      <div className="text-sm text-gray-600 mb-1">Nombre d'Effets</div>
-                      <div className="text-xl font-bold text-blue-600">
+                    <div className="stat-card text-center">
+                      <div className="text-sm text-gray-400 mb-1">Nombre d'Effets</div>
+                      <div className="text-xl font-bold text-primary-400">
                         {results.nombreEffets}
                       </div>
                     </div>
-                    <div className="text-center p-4 bg-green-50 rounded-lg">
-                      <div className="text-sm text-gray-600 mb-1">Valeur Nominale</div>
-                      <div className="text-xl font-bold text-green-600">
+                    <div className="stat-card text-center">
+                      <div className="text-sm text-gray-400 mb-1">Valeur Nominale</div>
+                      <div className="text-xl font-bold text-steel-400">
                         {formaterDevise(results.totaux.valeurNominale)}
                       </div>
                     </div>
-                    <div className="text-center p-4 bg-red-50 rounded-lg">
-                      <div className="text-sm text-gray-600 mb-1">Total Frais</div>
-                      <div className="text-xl font-bold text-red-600">
+                    <div className="stat-card text-center">
+                      <div className="text-sm text-gray-400 mb-1">Total Frais</div>
+                      <div className="text-xl font-bold text-accent-400">
                         {formaterDevise(results.totaux.totalFrais)}
                       </div>
                     </div>
-                    <div className="text-center p-4 bg-purple-50 rounded-lg">
-                      <div className="text-sm text-gray-600 mb-1">Valeur Nette</div>
-                      <div className="text-xl font-bold text-purple-600">
+                    <div className="stat-card text-center">
+                      <div className="text-sm text-gray-400 mb-1">Valeur Nette</div>
+                      <div className="text-xl font-bold text-green-400">
                         {formaterDevise(results.totaux.valeurNette)}
                       </div>
                     </div>
@@ -162,41 +162,41 @@ const Escompte = () => {
                 {/* Tableau détaillé */}
                 <Card title="Détail des Effets">
                   <div className="overflow-x-auto">
-                    <table className="min-w-full divide-y divide-gray-200">
-                      <thead className="bg-gray-50">
+                    <table className="table-dark">
+                      <thead>
                         <tr>
-                          <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">N°</th>
-                          <th className="px-3 py-3 text-right text-xs font-medium text-gray-500 uppercase">Val. Nominale</th>
-                          <th className="px-3 py-3 text-right text-xs font-medium text-gray-500 uppercase">Jours</th>
-                          <th className="px-3 py-3 text-right text-xs font-medium text-gray-500 uppercase">Escompte</th>
-                          <th className="px-3 py-3 text-right text-xs font-medium text-gray-500 uppercase">Commission</th>
-                          <th className="px-3 py-3 text-right text-xs font-medium text-gray-500 uppercase">Frais Fixes</th>
-                          <th className="px-3 py-3 text-right text-xs font-medium text-gray-500 uppercase">Total Frais</th>
-                          <th className="px-3 py-3 text-right text-xs font-medium text-gray-500 uppercase">Val. Nette</th>
+                          <th>N°</th>
+                          <th className="text-right">Val. Nominale</th>
+                          <th className="text-right">Jours</th>
+                          <th className="text-right">Escompte</th>
+                          <th className="text-right">Commission</th>
+                          <th className="text-right">Frais Fixes</th>
+                          <th className="text-right">Total Frais</th>
+                          <th className="text-right">Val. Nette</th>
                         </tr>
                       </thead>
-                      <tbody className="bg-white divide-y divide-gray-200">
+                      <tbody>
                         {results.effets.map((effet) => (
-                          <tr key={effet.numero} className="hover:bg-gray-50">
-                            <td className="px-3 py-3 text-sm text-gray-900">{effet.numero}</td>
-                            <td className="px-3 py-3 text-sm text-gray-900 text-right">{formaterDevise(effet.valeurNominale)}</td>
-                            <td className="px-3 py-3 text-sm text-gray-900 text-right">{effet.jours}</td>
-                            <td className="px-3 py-3 text-sm text-red-600 text-right">{formaterDevise(effet.escompte)}</td>
-                            <td className="px-3 py-3 text-sm text-orange-600 text-right">{formaterDevise(effet.commission)}</td>
-                            <td className="px-3 py-3 text-sm text-yellow-600 text-right">{formaterDevise(effet.fraisFixes)}</td>
-                            <td className="px-3 py-3 text-sm text-red-600 text-right font-medium">{formaterDevise(effet.totalFrais)}</td>
-                            <td className="px-3 py-3 text-sm text-green-600 text-right font-medium">{formaterDevise(effet.valeurNette)}</td>
+                          <tr key={effet.numero}>
+                            <td>{effet.numero}</td>
+                            <td className="text-right">{formaterDevise(effet.valeurNominale)}</td>
+                            <td className="text-right">{effet.jours}</td>
+                            <td className="text-right text-accent-400">{formaterDevise(effet.escompte)}</td>
+                            <td className="text-right text-orange-400">{formaterDevise(effet.commission)}</td>
+                            <td className="text-right text-yellow-400">{formaterDevise(effet.fraisFixes)}</td>
+                            <td className="text-right text-accent-400 font-medium">{formaterDevise(effet.totalFrais)}</td>
+                            <td className="text-right text-green-400 font-medium">{formaterDevise(effet.valeurNette)}</td>
                           </tr>
                         ))}
-                        <tr className="bg-gray-100 font-semibold">
-                          <td colSpan="1" className="px-3 py-3 text-sm text-gray-900">TOTAL</td>
-                          <td className="px-3 py-3 text-sm text-gray-900 text-right">{formaterDevise(results.totaux.valeurNominale)}</td>
-                          <td className="px-3 py-3"></td>
-                          <td className="px-3 py-3 text-sm text-red-600 text-right">{formaterDevise(results.totaux.escompte)}</td>
-                          <td className="px-3 py-3 text-sm text-orange-600 text-right">{formaterDevise(results.totaux.commission)}</td>
-                          <td className="px-3 py-3 text-sm text-yellow-600 text-right">{formaterDevise(results.totaux.fraisFixes)}</td>
-                          <td className="px-3 py-3 text-sm text-red-600 text-right">{formaterDevise(results.totaux.totalFrais)}</td>
-                          <td className="px-3 py-3 text-sm text-green-600 text-right">{formaterDevise(results.totaux.valeurNette)}</td>
+                        <tr className="bg-dark-700/50 font-semibold">
+                          <td>TOTAL</td>
+                          <td className="text-right">{formaterDevise(results.totaux.valeurNominale)}</td>
+                          <td></td>
+                          <td className="text-right text-accent-400">{formaterDevise(results.totaux.escompte)}</td>
+                          <td className="text-right text-orange-400">{formaterDevise(results.totaux.commission)}</td>
+                          <td className="text-right text-yellow-400">{formaterDevise(results.totaux.fraisFixes)}</td>
+                          <td className="text-right text-accent-400">{formaterDevise(results.totaux.totalFrais)}</td>
+                          <td className="text-right text-green-400">{formaterDevise(results.totaux.valeurNette)}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -206,16 +206,16 @@ const Escompte = () => {
                 {/* Formules */}
                 <Card title="Formules Utilisées">
                   <div className="space-y-3 text-sm">
-                    <div className="p-3 bg-gray-50 rounded">
-                      <strong>Escompte Commercial :</strong> E = V × t × n / 360
+                    <div className="p-3 bg-dark-700/50 border border-dark-600/50">
+                      <strong className="text-gray-300">Escompte Commercial :</strong> <span className="text-gray-400">E = V × t × n / 360</span>
                     </div>
-                    <div className="p-3 bg-gray-50 rounded">
-                      <strong>Valeur Actuelle :</strong> VA = V - E - Commission - Frais
+                    <div className="p-3 bg-dark-700/50 border border-dark-600/50">
+                      <strong className="text-gray-300">Valeur Actuelle :</strong> <span className="text-gray-400">VA = V - E - Commission - Frais</span>
                     </div>
-                    <div className="p-3 bg-gray-50 rounded">
-                      <strong>Commission :</strong> C = V × 0.006 (0.6%)
+                    <div className="p-3 bg-dark-700/50 border border-dark-600/50">
+                      <strong className="text-gray-300">Commission :</strong> <span className="text-gray-400">C = V × 0.006 (0.6%)</span>
                     </div>
-                    <p className="text-gray-600">
+                    <p className="text-gray-500">
                       Où V = valeur nominale, t = taux d'escompte, n = nombre de jours
                     </p>
                   </div>

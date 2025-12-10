@@ -61,15 +61,15 @@ const Epargne = () => {
       {
         label: 'Capital Total',
         data: results.map((r) => r.capitalFin),
-        borderColor: 'rgb(43, 108, 176)',
-        backgroundColor: 'rgba(43, 108, 176, 0.1)',
+        borderColor: 'rgb(61, 115, 182)',
+        backgroundColor: 'rgba(61, 115, 182, 0.1)',
         tension: 0.4,
       },
       {
         label: 'Versements Cumulés',
         data: results.map((r) => formData.capitalInitial + (r.annee * formData.versementMensuel * 12)),
-        borderColor: 'rgb(0, 195, 106)',
-        backgroundColor: 'rgba(0, 195, 106, 0.1)',
+        borderColor: 'rgb(99, 125, 152)',
+        backgroundColor: 'rgba(99, 125, 152, 0.1)',
         tension: 0.4,
       },
     ],
@@ -80,10 +80,12 @@ const Epargne = () => {
     plugins: {
       legend: {
         position: 'top',
+        labels: { color: '#9aa3b4' },
       },
       title: {
         display: true,
         text: 'Évolution de l\'Épargne',
+        color: '#fff',
       },
     },
     scales: {
@@ -91,17 +93,23 @@ const Epargne = () => {
         beginAtZero: true,
         ticks: {
           callback: (value) => formaterDevise(value),
+          color: '#6b7689',
         },
+        grid: { color: 'rgba(75, 85, 99, 0.3)' },
+      },
+      x: {
+        ticks: { color: '#6b7689' },
+        grid: { color: 'rgba(75, 85, 99, 0.3)' },
       },
     },
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="container mx-auto px-4">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">💰 Compte d'Épargne</h1>
-          <p className="text-gray-600">
+    <div className="min-h-screen bg-dark-900 py-8">
+      <div className="container mx-auto px-6">
+        <div className="mb-8 animate-fade-in">
+          <h1 className="text-3xl font-bold text-white mb-2">Compte d'Épargne</h1>
+          <p className="text-gray-400">
             Simulez l'évolution de votre épargne avec des versements mensuels
           </p>
         </div>
@@ -111,7 +119,7 @@ const Epargne = () => {
           <Card className="lg:col-span-1">
             <form onSubmit={handleCalculate}>
               <Input
-                label="Capital Initial (€)"
+                label="Capital Initial (TND)"
                 type="number"
                 name="capitalInitial"
                 value={formData.capitalInitial}
@@ -122,7 +130,7 @@ const Epargne = () => {
               />
               
               <Input
-                label="Versement Mensuel (€)"
+                label="Versement Mensuel (TND)"
                 type="number"
                 name="versementMensuel"
                 value={formData.versementMensuel}
@@ -169,27 +177,27 @@ const Epargne = () => {
                 {/* Résumé */}
                 <Card title="Résumé">
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="text-center p-4 bg-blue-50 rounded-lg">
-                      <div className="text-sm text-gray-600 mb-1">Capital Final</div>
-                      <div className="text-xl font-bold text-blue-600">
+                    <div className="stat-card text-center">
+                      <div className="text-sm text-gray-400 mb-1">Capital Final</div>
+                      <div className="text-xl font-bold text-primary-400">
                         {formaterDevise(results[results.length - 1].capitalFin)}
                       </div>
                     </div>
-                    <div className="text-center p-4 bg-green-50 rounded-lg">
-                      <div className="text-sm text-gray-600 mb-1">Versements Totaux</div>
-                      <div className="text-xl font-bold text-green-600">
+                    <div className="stat-card text-center">
+                      <div className="text-sm text-gray-400 mb-1">Versements Totaux</div>
+                      <div className="text-xl font-bold text-steel-400">
                         {formaterDevise(formData.capitalInitial + (formData.versementMensuel * 12 * formData.dureeAnnees))}
                       </div>
                     </div>
-                    <div className="text-center p-4 bg-purple-50 rounded-lg">
-                      <div className="text-sm text-gray-600 mb-1">Intérêts Gagnés</div>
-                      <div className="text-xl font-bold text-purple-600">
+                    <div className="stat-card text-center">
+                      <div className="text-sm text-gray-400 mb-1">Intérêts Gagnés</div>
+                      <div className="text-xl font-bold text-green-400">
                         {formaterDevise(results[results.length - 1].capitalFin - formData.capitalInitial - (formData.versementMensuel * 12 * formData.dureeAnnees))}
                       </div>
                     </div>
-                    <div className="text-center p-4 bg-yellow-50 rounded-lg">
-                      <div className="text-sm text-gray-600 mb-1">Rendement</div>
-                      <div className="text-xl font-bold text-yellow-600">
+                    <div className="stat-card text-center">
+                      <div className="text-sm text-gray-400 mb-1">Rendement</div>
+                      <div className="text-xl font-bold text-accent-400">
                         {formaterPourcentage(formData.tauxAnnuel / 100)}
                       </div>
                     </div>
@@ -204,24 +212,24 @@ const Epargne = () => {
                 {/* Tableau */}
                 <Card title="Détail Année par Année">
                   <div className="overflow-x-auto">
-                    <table className="min-w-full divide-y divide-gray-200">
-                      <thead className="bg-gray-50">
+                    <table className="table-dark">
+                      <thead>
                         <tr>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Année</th>
-                          <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Capital Début</th>
-                          <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Versements</th>
-                          <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Intérêts</th>
-                          <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Capital Fin</th>
+                          <th>Année</th>
+                          <th className="text-right">Capital Début</th>
+                          <th className="text-right">Versements</th>
+                          <th className="text-right">Intérêts</th>
+                          <th className="text-right">Capital Fin</th>
                         </tr>
                       </thead>
-                      <tbody className="bg-white divide-y divide-gray-200">
+                      <tbody>
                         {results.slice(1).map((row) => (
-                          <tr key={row.annee} className="hover:bg-gray-50">
-                            <td className="px-4 py-3 text-sm text-gray-900">{row.annee}</td>
-                            <td className="px-4 py-3 text-sm text-gray-900 text-right">{formaterDevise(row.capitalDebut)}</td>
-                            <td className="px-4 py-3 text-sm text-green-600 text-right">{formaterDevise(row.versements)}</td>
-                            <td className="px-4 py-3 text-sm text-blue-600 text-right">{formaterDevise(row.interets)}</td>
-                            <td className="px-4 py-3 text-sm font-medium text-gray-900 text-right">{formaterDevise(row.capitalFin)}</td>
+                          <tr key={row.annee}>
+                            <td>{row.annee}</td>
+                            <td className="text-right">{formaterDevise(row.capitalDebut)}</td>
+                            <td className="text-right text-green-400">{formaterDevise(row.versements)}</td>
+                            <td className="text-right text-primary-400">{formaterDevise(row.interets)}</td>
+                            <td className="text-right font-medium text-white">{formaterDevise(row.capitalFin)}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -232,13 +240,13 @@ const Epargne = () => {
                 {/* Formules */}
                 <Card title="Formules Utilisées">
                   <div className="space-y-3 text-sm">
-                    <div className="p-3 bg-gray-50 rounded">
-                      <strong>Intérêts Simples :</strong> I = C × t × n
+                    <div className="p-3 bg-dark-700/50 border border-dark-600/50">
+                      <strong className="text-gray-300">Intérêts Simples :</strong> <span className="text-gray-400">I = C × t × n</span>
                     </div>
-                    <div className="p-3 bg-gray-50 rounded">
-                      <strong>Valeur Acquise :</strong> VA = C × (1 + t × n)
+                    <div className="p-3 bg-dark-700/50 border border-dark-600/50">
+                      <strong className="text-gray-300">Valeur Acquise :</strong> <span className="text-gray-400">VA = C × (1 + t × n)</span>
                     </div>
-                    <p className="text-gray-600">
+                    <p className="text-gray-500">
                       Où C = capital, t = taux d'intérêt, n = durée
                     </p>
                   </div>

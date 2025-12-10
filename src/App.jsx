@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from './components/layout/Sidebar';
 import Footer from './components/layout/Footer';
@@ -11,11 +11,13 @@ import EmpruntObligataire from './pages/EmpruntObligataire';
 import Portefeuille from './pages/Portefeuille';
 
 function App() {
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+
   return (
     <Router>
       <div className="flex min-h-screen bg-dark-900">
-        <Sidebar />
-        <div className="flex flex-col flex-1 ml-64 transition-all duration-300">
+        <Sidebar isCollapsed={sidebarCollapsed} onToggle={() => setSidebarCollapsed(!sidebarCollapsed)} />
+        <div className={`flex flex-col flex-1 transition-all duration-300 ${sidebarCollapsed ? 'ml-16' : 'ml-64'}`}>
           <main className="flex-grow">
             <Routes>
               <Route path="/" element={<Home />} />

@@ -5,6 +5,11 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --color-primary-500: #3d73b6;
+    --color-accent-500: #dc2626;
+  }
+  
   body {
     @apply bg-dark-900 text-gray-100 font-sans antialiased;
   }

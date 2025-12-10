@@ -28,24 +28,24 @@ const Home = () => {
         <div className="absolute -left-1/4 top-1/4 w-1/3 h-1/2 bg-gradient-to-br from-primary-400/8 via-transparent to-transparent transform rotate-12" />
         <div className="absolute left-0 bottom-0 w-2/3 h-1/3 bg-gradient-to-tr from-accent-500/5 via-transparent to-transparent" />
         
-        {/* Grid pattern */}
+        {/* Grid pattern - uses CSS variables from index.css */}
         <div 
           className="absolute inset-0 opacity-[0.03]"
           style={{
-            backgroundImage: `linear-gradient(90deg, #3d73b6 1px, transparent 1px),
-                             linear-gradient(180deg, #3d73b6 1px, transparent 1px)`,
+            backgroundImage: `linear-gradient(90deg, var(--color-primary-500) 1px, transparent 1px),
+                             linear-gradient(180deg, var(--color-primary-500) 1px, transparent 1px)`,
             backgroundSize: '60px 60px',
           }}
         />
         
-        {/* Angular lines */}
+        {/* Angular lines - uses CSS variables from index.css */}
         <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
           <line x1="0" y1="100%" x2="60%" y2="0" stroke="url(#line-gradient)" strokeWidth="1" opacity="0.1" />
           <line x1="20%" y1="100%" x2="80%" y2="0" stroke="url(#line-gradient)" strokeWidth="1" opacity="0.05" />
           <defs>
             <linearGradient id="line-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#3d73b6" />
-              <stop offset="100%" stopColor="#dc2626" />
+              <stop offset="0%" style={{ stopColor: 'var(--color-primary-500)' }} />
+              <stop offset="100%" style={{ stopColor: 'var(--color-accent-500)' }} />
             </linearGradient>
           </defs>
         </svg>

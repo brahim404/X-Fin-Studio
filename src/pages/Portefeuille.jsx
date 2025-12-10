@@ -83,24 +83,24 @@ const Portefeuille = () => {
       {
         label: 'Frontière Efficiente',
         data: results.frontiere.map((p) => ({ x: p.volatilite, y: p.rendement })),
-        backgroundColor: 'rgba(43, 108, 176, 0.6)',
-        borderColor: 'rgb(43, 108, 176)',
+        backgroundColor: 'rgba(61, 115, 182, 0.6)',
+        borderColor: 'rgb(61, 115, 182)',
         showLine: true,
         tension: 0.4,
       },
       {
         label: 'Portefeuille Actuel',
         data: [{ x: results.stats.volatilite, y: results.stats.rendementEspere }],
-        backgroundColor: 'rgba(0, 195, 106, 1)',
-        borderColor: 'rgb(0, 195, 106)',
+        backgroundColor: 'rgba(34, 197, 94, 1)',
+        borderColor: 'rgb(34, 197, 94)',
         pointRadius: 8,
         pointHoverRadius: 10,
       },
       {
         label: 'Portefeuille Optimal',
         data: [{ x: results.optimal.volatilite, y: results.optimal.rendement }],
-        backgroundColor: 'rgba(239, 68, 68, 1)',
-        borderColor: 'rgb(239, 68, 68)',
+        backgroundColor: 'rgba(220, 38, 38, 1)',
+        borderColor: 'rgb(220, 38, 38)',
         pointRadius: 8,
         pointHoverRadius: 10,
       },
@@ -128,10 +128,12 @@ const Portefeuille = () => {
     plugins: {
       legend: {
         position: 'top',
+        labels: { color: '#9aa3b4' },
       },
       title: {
         display: true,
         text: 'Frontière Efficiente de Markowitz',
+        color: '#fff',
       },
       tooltip: {
         callbacks: {
@@ -146,25 +148,31 @@ const Portefeuille = () => {
         title: {
           display: true,
           text: 'Volatilité (Risque) %',
+          color: '#9aa3b4',
         },
         beginAtZero: true,
+        ticks: { color: '#6b7689' },
+        grid: { color: 'rgba(75, 85, 99, 0.3)' },
       },
       y: {
         title: {
           display: true,
           text: 'Rendement Espéré %',
+          color: '#9aa3b4',
         },
         beginAtZero: true,
+        ticks: { color: '#6b7689' },
+        grid: { color: 'rgba(75, 85, 99, 0.3)' },
       },
     },
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="container mx-auto px-4">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">📈 Gestion de Portefeuille</h1>
-          <p className="text-gray-600">
+    <div className="min-h-screen bg-dark-900 py-8">
+      <div className="container mx-auto px-6">
+        <div className="mb-8 animate-fade-in">
+          <h1 className="text-3xl font-bold text-white mb-2">Gestion de Portefeuille</h1>
+          <p className="text-gray-400">
             Optimisez votre portefeuille d'actifs avec la méthode de Markowitz
           </p>
         </div>
@@ -173,10 +181,10 @@ const Portefeuille = () => {
           {/* Formulaire */}
           <Card className="lg:col-span-1">
             <form onSubmit={handleCalculate}>
-              <h3 className="text-lg font-semibold mb-4">Actifs du Portefeuille</h3>
+              <h3 className="text-lg font-semibold text-white mb-4">Actifs du Portefeuille</h3>
               
               {actifs.map((actif, index) => (
-                <div key={index} className="mb-4 p-4 bg-gray-50 rounded-lg">
+                <div key={index} className="mb-4 p-4 bg-dark-700/50 border border-dark-600/50">
                   <Input
                     label={`Nom de l'Actif ${index + 1}`}
                     type="text"
@@ -256,27 +264,27 @@ const Portefeuille = () => {
                 {/* Statistiques Actuelles */}
                 <Card title="Statistiques du Portefeuille Actuel">
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="text-center p-4 bg-blue-50 rounded-lg">
-                      <div className="text-sm text-gray-600 mb-1">Rendement Espéré</div>
-                      <div className="text-xl font-bold text-blue-600">
+                    <div className="stat-card text-center">
+                      <div className="text-sm text-gray-400 mb-1">Rendement Espéré</div>
+                      <div className="text-xl font-bold text-primary-400">
                         {results.stats.rendementEspere.toFixed(2)}%
                       </div>
                     </div>
-                    <div className="text-center p-4 bg-orange-50 rounded-lg">
-                      <div className="text-sm text-gray-600 mb-1">Volatilité (Risque)</div>
-                      <div className="text-xl font-bold text-orange-600">
+                    <div className="stat-card text-center">
+                      <div className="text-sm text-gray-400 mb-1">Volatilité (Risque)</div>
+                      <div className="text-xl font-bold text-orange-400">
                         {results.stats.volatilite.toFixed(2)}%
                       </div>
                     </div>
-                    <div className="text-center p-4 bg-green-50 rounded-lg">
-                      <div className="text-sm text-gray-600 mb-1">Ratio de Sharpe</div>
-                      <div className="text-xl font-bold text-green-600">
+                    <div className="stat-card text-center">
+                      <div className="text-sm text-gray-400 mb-1">Ratio de Sharpe</div>
+                      <div className="text-xl font-bold text-green-400">
                         {results.stats.ratioSharpe.toFixed(2)}
                       </div>
                     </div>
-                    <div className="text-center p-4 bg-purple-50 rounded-lg">
-                      <div className="text-sm text-gray-600 mb-1">Taux Sans Risque</div>
-                      <div className="text-xl font-bold text-purple-600">
+                    <div className="stat-card text-center">
+                      <div className="text-sm text-gray-400 mb-1">Taux Sans Risque</div>
+                      <div className="text-xl font-bold text-steel-400">
                         {results.stats.tauxSansRisque.toFixed(2)}%
                       </div>
                     </div>
@@ -287,27 +295,27 @@ const Portefeuille = () => {
                 <Card title="Portefeuille Optimal (Ratio de Sharpe Maximum)">
                   <div className="space-y-4">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                      <div className="text-center p-4 bg-red-50 rounded-lg">
-                        <div className="text-sm text-gray-600 mb-1">Rendement</div>
-                        <div className="text-xl font-bold text-red-600">
+                      <div className="stat-card text-center">
+                        <div className="text-sm text-gray-400 mb-1">Rendement</div>
+                        <div className="text-xl font-bold text-accent-400">
                           {results.optimal.rendement.toFixed(2)}%
                         </div>
                       </div>
-                      <div className="text-center p-4 bg-yellow-50 rounded-lg">
-                        <div className="text-sm text-gray-600 mb-1">Volatilité</div>
-                        <div className="text-xl font-bold text-yellow-600">
+                      <div className="stat-card text-center">
+                        <div className="text-sm text-gray-400 mb-1">Volatilité</div>
+                        <div className="text-xl font-bold text-yellow-400">
                           {results.optimal.volatilite.toFixed(2)}%
                         </div>
                       </div>
-                      <div className="text-center p-4 bg-indigo-50 rounded-lg">
-                        <div className="text-sm text-gray-600 mb-1">Ratio de Sharpe</div>
-                        <div className="text-xl font-bold text-indigo-600">
+                      <div className="stat-card text-center">
+                        <div className="text-sm text-gray-400 mb-1">Ratio de Sharpe</div>
+                        <div className="text-xl font-bold text-purple-400">
                           {results.optimal.ratioSharpe.toFixed(2)}
                         </div>
                       </div>
-                      <div className="text-center p-4 bg-cyan-50 rounded-lg">
-                        <div className="text-sm text-gray-600 mb-1">Amélioration</div>
-                        <div className="text-xl font-bold text-cyan-600">
+                      <div className="stat-card text-center">
+                        <div className="text-sm text-gray-400 mb-1">Amélioration</div>
+                        <div className="text-xl font-bold text-cyan-400">
                           {results.stats.ratioSharpe > 0
                             ? ((results.optimal.ratioSharpe - results.stats.ratioSharpe) / results.stats.ratioSharpe * 100).toFixed(1)
                             : 'N/A'}%
@@ -315,16 +323,16 @@ const Portefeuille = () => {
                       </div>
                     </div>
                     
-                    <div className="p-4 bg-gray-50 rounded-lg">
-                      <h4 className="font-semibold text-gray-900 mb-3">Allocation Optimale Suggérée</h4>
+                    <div className="p-4 bg-dark-700/50 border border-dark-600/50">
+                      <h4 className="font-semibold text-white mb-3">Allocation Optimale Suggérée</h4>
                       <div className="grid grid-cols-2 gap-4">
-                        <div className="flex justify-between items-center p-3 bg-white rounded">
-                          <span className="text-gray-700">{actifs[0].nom}</span>
-                          <span className="text-lg font-bold text-blue-600">{results.optimal.poids1}%</span>
+                        <div className="flex justify-between items-center p-3 bg-dark-800 border border-dark-600/50">
+                          <span className="text-gray-300">{actifs[0].nom}</span>
+                          <span className="text-lg font-bold text-primary-400">{results.optimal.poids1}%</span>
                         </div>
-                        <div className="flex justify-between items-center p-3 bg-white rounded">
-                          <span className="text-gray-700">{actifs[1].nom}</span>
-                          <span className="text-lg font-bold text-purple-600">{results.optimal.poids2}%</span>
+                        <div className="flex justify-between items-center p-3 bg-dark-800 border border-dark-600/50">
+                          <span className="text-gray-300">{actifs[1].nom}</span>
+                          <span className="text-lg font-bold text-purple-400">{results.optimal.poids2}%</span>
                         </div>
                       </div>
                     </div>
@@ -334,12 +342,12 @@ const Portefeuille = () => {
                 {/* Graphique */}
                 <Card title="Frontière Efficiente">
                   <Scatter data={chartData} options={chartOptions} />
-                  <div className="mt-4 text-sm text-gray-600">
+                  <div className="mt-4 text-sm text-gray-400">
                     <p className="mb-2">
-                      <strong>La frontière efficiente</strong> représente l'ensemble des portefeuilles offrant le meilleur rendement pour un niveau de risque donné.
+                      <strong className="text-gray-300">La frontière efficiente</strong> représente l'ensemble des portefeuilles offrant le meilleur rendement pour un niveau de risque donné.
                     </p>
                     <p>
-                      Le <strong>portefeuille optimal</strong> (point rouge) maximise le ratio de Sharpe, offrant le meilleur compromis rendement/risque.
+                      Le <strong className="text-gray-300">portefeuille optimal</strong> (point rouge) maximise le ratio de Sharpe, offrant le meilleur compromis rendement/risque.
                     </p>
                   </div>
                 </Card>
@@ -351,12 +359,12 @@ const Portefeuille = () => {
                       <div key={index} className="flex items-center">
                         <div className="flex-1">
                           <div className="flex justify-between mb-1">
-                            <span className="text-sm font-medium text-gray-700">{actif.nom}</span>
-                            <span className="text-sm text-gray-600">{actif.poids}%</span>
+                            <span className="text-sm font-medium text-gray-300">{actif.nom}</span>
+                            <span className="text-sm text-gray-400">{actif.poids}%</span>
                           </div>
-                          <div className="w-full bg-gray-200 rounded-full h-2.5">
+                          <div className="w-full bg-dark-700 h-2.5">
                             <div
-                              className={`h-2.5 rounded-full ${index === 0 ? 'bg-blue-600' : 'bg-purple-600'}`}
+                              className={`h-2.5 ${index === 0 ? 'bg-primary-500' : 'bg-purple-500'}`}
                               style={{ width: `${actif.poids}%` }}
                             ></div>
                           </div>
@@ -373,34 +381,34 @@ const Portefeuille = () => {
                 {/* Formules */}
                 <Card title="Formules Utilisées">
                   <div className="space-y-3 text-sm">
-                    <div className="p-3 bg-gray-50 rounded">
-                      <strong>Rendement du Portefeuille :</strong> Rp = Σ(wi × Ri)
+                    <div className="p-3 bg-dark-700/50 border border-dark-600/50">
+                      <strong className="text-gray-300">Rendement du Portefeuille :</strong> <span className="text-gray-400">Rp = Σ(wi × Ri)</span>
                     </div>
-                    <div className="p-3 bg-gray-50 rounded">
-                      <strong>Volatilité du Portefeuille :</strong> σp = √(Σ Σ wi × wj × σi × σj × ρij)
+                    <div className="p-3 bg-dark-700/50 border border-dark-600/50">
+                      <strong className="text-gray-300">Volatilité du Portefeuille :</strong> <span className="text-gray-400">σp = √(Σ Σ wi × wj × σi × σj × ρij)</span>
                     </div>
-                    <div className="p-3 bg-gray-50 rounded">
-                      <strong>Ratio de Sharpe :</strong> S = (Rp - Rf) / σp
+                    <div className="p-3 bg-dark-700/50 border border-dark-600/50">
+                      <strong className="text-gray-300">Ratio de Sharpe :</strong> <span className="text-gray-400">S = (Rp - Rf) / σp</span>
                     </div>
-                    <p className="text-gray-600">
+                    <p className="text-gray-500">
                       Où w = poids, R = rendement, σ = volatilité, ρ = corrélation, Rf = taux sans risque
                     </p>
                   </div>
                 </Card>
 
                 {/* Conseils */}
-                <Card title="💡 Interprétation">
-                  <ul className="space-y-2 text-sm text-gray-700">
+                <Card title="Interprétation">
+                  <ul className="space-y-2 text-sm text-gray-300">
                     <li className="flex items-start">
-                      <span className="text-green-500 mr-2">✓</span>
+                      <span className="text-green-400 mr-2">✓</span>
                       <span>Un ratio de Sharpe plus élevé indique un meilleur rendement ajusté au risque</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="text-green-500 mr-2">✓</span>
+                      <span className="text-green-400 mr-2">✓</span>
                       <span>La diversification réduit le risque sans nécessairement réduire le rendement</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="text-green-500 mr-2">✓</span>
+                      <span className="text-green-400 mr-2">✓</span>
                       <span>Une corrélation faible ou négative entre actifs améliore la diversification</span>
                     </li>
                   </ul>

@@ -72,8 +72,8 @@ const EmpruntIndivis = () => {
       {
         label: 'Capital Restant',
         data: results.tableau.filter((_, i) => i % Math.ceil(results.tableau.length / 50) === 0).map((r) => r.capitalRestantFin),
-        borderColor: 'rgb(239, 68, 68)',
-        backgroundColor: 'rgba(239, 68, 68, 0.1)',
+        borderColor: 'rgb(220, 38, 38)',
+        backgroundColor: 'rgba(220, 38, 38, 0.1)',
         tension: 0.4,
       },
       {
@@ -98,10 +98,12 @@ const EmpruntIndivis = () => {
     plugins: {
       legend: {
         position: 'top',
+        labels: { color: '#9aa3b4' },
       },
       title: {
         display: true,
         text: 'Évolution de l\'Emprunt',
+        color: '#fff',
       },
     },
     scales: {
@@ -109,17 +111,23 @@ const EmpruntIndivis = () => {
         beginAtZero: true,
         ticks: {
           callback: (value) => formaterDevise(value),
+          color: '#6b7689',
         },
+        grid: { color: 'rgba(75, 85, 99, 0.3)' },
+      },
+      x: {
+        ticks: { color: '#6b7689' },
+        grid: { color: 'rgba(75, 85, 99, 0.3)' },
       },
     },
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="container mx-auto px-4">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">🏠 Emprunts Indivis</h1>
-          <p className="text-gray-600">
+    <div className="min-h-screen bg-dark-900 py-8">
+      <div className="container mx-auto px-6">
+        <div className="mb-8 animate-fade-in">
+          <h1 className="text-3xl font-bold text-white mb-2">Emprunts Indivis</h1>
+          <p className="text-gray-400">
             Générez un tableau d'amortissement complet pour votre emprunt
           </p>
         </div>
@@ -129,7 +137,7 @@ const EmpruntIndivis = () => {
           <Card className="lg:col-span-1">
             <form onSubmit={handleCalculate}>
               <Input
-                label="Montant Emprunté (€)"
+                label="Montant Emprunté (TND)"
                 type="number"
                 name="capital"
                 value={formData.capital}
@@ -164,14 +172,14 @@ const EmpruntIndivis = () => {
               />
 
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-300 mb-2">
                   Type d'Amortissement
                 </label>
                 <select
                   name="typeAmortissement"
                   value={formData.typeAmortissement}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+                  className="w-full px-4 py-2.5 bg-dark-800 border border-dark-600 text-gray-100 focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500 outline-none"
                 >
                   <option value="constant">Annuités Constantes</option>
                   <option value="lineaire">Amortissement Constant</option>
@@ -199,29 +207,29 @@ const EmpruntIndivis = () => {
                   }
                 >
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="text-center p-4 bg-blue-50 rounded-lg">
-                      <div className="text-sm text-gray-600 mb-1">Capital Emprunté</div>
-                      <div className="text-xl font-bold text-blue-600">
+                    <div className="stat-card text-center">
+                      <div className="text-sm text-gray-400 mb-1">Capital Emprunté</div>
+                      <div className="text-xl font-bold text-primary-400">
                         {formaterDevise(results.cout.capitalEmprunte)}
                       </div>
                     </div>
-                    <div className="text-center p-4 bg-green-50 rounded-lg">
-                      <div className="text-sm text-gray-600 mb-1">Total Remboursé</div>
-                      <div className="text-xl font-bold text-green-600">
+                    <div className="stat-card text-center">
+                      <div className="text-sm text-gray-400 mb-1">Total Remboursé</div>
+                      <div className="text-xl font-bold text-steel-400">
                         {formaterDevise(results.cout.totalMensualites)}
                       </div>
                     </div>
-                    <div className="text-center p-4 bg-red-50 rounded-lg">
-                      <div className="text-sm text-gray-600 mb-1">Coût Total</div>
-                      <div className="text-xl font-bold text-red-600">
+                    <div className="stat-card text-center">
+                      <div className="text-sm text-gray-400 mb-1">Coût Total</div>
+                      <div className="text-xl font-bold text-accent-400">
                         {formaterDevise(results.cout.totalInterets)}
                       </div>
                     </div>
-                    <div className="text-center p-4 bg-purple-50 rounded-lg">
-                      <div className="text-sm text-gray-600 mb-1">
+                    <div className="stat-card text-center">
+                      <div className="text-sm text-gray-400 mb-1">
                         {formData.typeAmortissement === 'constant' ? 'Mensualité' : 'Première Mens.'}
                       </div>
-                      <div className="text-xl font-bold text-purple-600">
+                      <div className="text-xl font-bold text-green-400">
                         {formaterDevise(results.tableau[0]?.mensualite || 0)}
                       </div>
                     </div>
@@ -236,26 +244,26 @@ const EmpruntIndivis = () => {
                 {/* Tableau */}
                 <Card title="Tableau d'Amortissement">
                   <div className="overflow-x-auto max-h-96">
-                    <table className="min-w-full divide-y divide-gray-200">
-                      <thead className="bg-gray-50 sticky top-0">
+                    <table className="table-dark">
+                      <thead className="sticky top-0 bg-dark-800">
                         <tr>
-                          <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">Mois</th>
-                          <th className="px-3 py-3 text-right text-xs font-medium text-gray-500 uppercase">Capital Restant</th>
-                          <th className="px-3 py-3 text-right text-xs font-medium text-gray-500 uppercase">Mensualité</th>
-                          <th className="px-3 py-3 text-right text-xs font-medium text-gray-500 uppercase">Intérêts</th>
-                          <th className="px-3 py-3 text-right text-xs font-medium text-gray-500 uppercase">Amortissement</th>
-                          <th className="px-3 py-3 text-right text-xs font-medium text-gray-500 uppercase">Reste Dû</th>
+                          <th>Mois</th>
+                          <th className="text-right">Capital Restant</th>
+                          <th className="text-right">Mensualité</th>
+                          <th className="text-right">Intérêts</th>
+                          <th className="text-right">Amortissement</th>
+                          <th className="text-right">Reste Dû</th>
                         </tr>
                       </thead>
-                      <tbody className="bg-white divide-y divide-gray-200">
+                      <tbody>
                         {results.tableau.slice(0, 60).map((row) => (
-                          <tr key={row.mois} className="hover:bg-gray-50">
-                            <td className="px-3 py-2 text-sm text-gray-900">{row.mois}</td>
-                            <td className="px-3 py-2 text-sm text-gray-900 text-right">{formaterDevise(row.capitalRestantDebut)}</td>
-                            <td className="px-3 py-2 text-sm text-purple-600 text-right">{formaterDevise(row.mensualite)}</td>
-                            <td className="px-3 py-2 text-sm text-orange-600 text-right">{formaterDevise(row.interets)}</td>
-                            <td className="px-3 py-2 text-sm text-green-600 text-right">{formaterDevise(row.amortissement)}</td>
-                            <td className="px-3 py-2 text-sm font-medium text-gray-900 text-right">{formaterDevise(row.capitalRestantFin)}</td>
+                          <tr key={row.mois}>
+                            <td>{row.mois}</td>
+                            <td className="text-right">{formaterDevise(row.capitalRestantDebut)}</td>
+                            <td className="text-right text-primary-400">{formaterDevise(row.mensualite)}</td>
+                            <td className="text-right text-orange-400">{formaterDevise(row.interets)}</td>
+                            <td className="text-right text-green-400">{formaterDevise(row.amortissement)}</td>
+                            <td className="text-right font-medium text-white">{formaterDevise(row.capitalRestantFin)}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -272,17 +280,17 @@ const EmpruntIndivis = () => {
                 <Card title="Formules Utilisées">
                   <div className="space-y-3 text-sm">
                     {formData.typeAmortissement === 'constant' && (
-                      <div className="p-3 bg-gray-50 rounded">
-                        <strong>Mensualité Constante :</strong> M = C × [t / (1 - (1+t)^-n)]
+                      <div className="p-3 bg-dark-700/50 border border-dark-600/50">
+                        <strong className="text-gray-300">Mensualité Constante :</strong> <span className="text-gray-400">M = C × [t / (1 - (1+t)^-n)]</span>
                       </div>
                     )}
-                    <div className="p-3 bg-gray-50 rounded">
-                      <strong>Intérêts :</strong> I = Capital Restant × Taux Mensuel
+                    <div className="p-3 bg-dark-700/50 border border-dark-600/50">
+                      <strong className="text-gray-300">Intérêts :</strong> <span className="text-gray-400">I = Capital Restant × Taux Mensuel</span>
                     </div>
-                    <div className="p-3 bg-gray-50 rounded">
-                      <strong>Amortissement :</strong> A = Mensualité - Intérêts
+                    <div className="p-3 bg-dark-700/50 border border-dark-600/50">
+                      <strong className="text-gray-300">Amortissement :</strong> <span className="text-gray-400">A = Mensualité - Intérêts</span>
                     </div>
-                    <p className="text-gray-600">
+                    <p className="text-gray-500">
                       Où C = capital, t = taux mensuel, n = nombre de mois
                     </p>
                   </div>

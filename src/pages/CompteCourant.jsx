@@ -33,11 +33,11 @@ const CompteCourant = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="container mx-auto px-4">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">🏧 Compte Courant - Agios</h1>
-          <p className="text-gray-600">
+    <div className="min-h-screen bg-dark-900 py-8">
+      <div className="container mx-auto px-6">
+        <div className="mb-8 animate-fade-in">
+          <h1 className="text-3xl font-bold text-white mb-2">Compte Courant - Agios</h1>
+          <p className="text-gray-400">
             Calculez les frais de découvert et agios pour votre compte courant
           </p>
         </div>
@@ -47,7 +47,7 @@ const CompteCourant = () => {
           <Card className="lg:col-span-1">
             <form onSubmit={handleCalculate}>
               <Input
-                label="Montant du Découvert (€)"
+                label="Montant du Découvert (TND)"
                 type="number"
                 name="montantDecouvert"
                 value={formData.montantDecouvert}
@@ -96,30 +96,30 @@ const CompteCourant = () => {
                 {/* Résumé */}
                 <Card title="Détail des Frais">
                   <div className="space-y-4">
-                    <div className="flex justify-between items-center p-4 bg-red-50 rounded-lg">
-                      <span className="text-gray-700">Montant du Découvert</span>
-                      <span className="text-xl font-bold text-red-600">
+                    <div className="flex justify-between items-center p-4 stat-card">
+                      <span className="text-gray-300">Montant du Découvert</span>
+                      <span className="text-xl font-bold text-accent-400">
                         {formaterDevise(formData.montantDecouvert)}
                       </span>
                     </div>
                     
-                    <div className="flex justify-between items-center p-4 bg-orange-50 rounded-lg">
-                      <span className="text-gray-700">Intérêts Débiteurs</span>
-                      <span className="text-xl font-bold text-orange-600">
+                    <div className="flex justify-between items-center p-4 stat-card">
+                      <span className="text-gray-300">Intérêts Débiteurs</span>
+                      <span className="text-xl font-bold text-orange-400">
                         {formaterDevise(results.interets)}
                       </span>
                     </div>
                     
-                    <div className="flex justify-between items-center p-4 bg-yellow-50 rounded-lg">
-                      <span className="text-gray-700">Commission</span>
-                      <span className="text-xl font-bold text-yellow-600">
+                    <div className="flex justify-between items-center p-4 stat-card">
+                      <span className="text-gray-300">Commission</span>
+                      <span className="text-xl font-bold text-yellow-400">
                         {formaterDevise(results.commission)}
                       </span>
                     </div>
                     
-                    <div className="flex justify-between items-center p-4 bg-purple-50 rounded-lg border-2 border-purple-200">
-                      <span className="text-gray-900 font-semibold">Total des Agios</span>
-                      <span className="text-2xl font-bold text-purple-600">
+                    <div className="flex justify-between items-center p-4 stat-card border-2 border-primary-500/50">
+                      <span className="text-white font-semibold">Total des Agios</span>
+                      <span className="text-2xl font-bold text-primary-400">
                         {formaterDevise(results.total)}
                       </span>
                     </div>
@@ -129,33 +129,33 @@ const CompteCourant = () => {
                 {/* Récapitulatif */}
                 <Card title="Récapitulatif">
                   <div className="overflow-x-auto">
-                    <table className="min-w-full divide-y divide-gray-200">
-                      <thead className="bg-gray-50">
+                    <table className="table-dark">
+                      <thead>
                         <tr>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
-                          <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Montant</th>
+                          <th>Description</th>
+                          <th className="text-right">Montant</th>
                         </tr>
                       </thead>
-                      <tbody className="bg-white divide-y divide-gray-200">
+                      <tbody>
                         <tr>
-                          <td className="px-4 py-3 text-sm text-gray-900">Découvert sur {formData.nombreJours} jours</td>
-                          <td className="px-4 py-3 text-sm text-gray-900 text-right">{formaterDevise(formData.montantDecouvert)}</td>
+                          <td>Découvert sur {formData.nombreJours} jours</td>
+                          <td className="text-right">{formaterDevise(formData.montantDecouvert)}</td>
                         </tr>
                         <tr>
-                          <td className="px-4 py-3 text-sm text-gray-900">Taux appliqué</td>
-                          <td className="px-4 py-3 text-sm text-gray-900 text-right">{formaterPourcentage(formData.tauxAnnuel / 100)}</td>
+                          <td>Taux appliqué</td>
+                          <td className="text-right">{formaterPourcentage(formData.tauxAnnuel / 100)}</td>
                         </tr>
                         <tr>
-                          <td className="px-4 py-3 text-sm text-gray-900">Intérêts débiteurs</td>
-                          <td className="px-4 py-3 text-sm text-orange-600 text-right">{formaterDevise(results.interets)}</td>
+                          <td>Intérêts débiteurs</td>
+                          <td className="text-right text-orange-400">{formaterDevise(results.interets)}</td>
                         </tr>
                         <tr>
-                          <td className="px-4 py-3 text-sm text-gray-900">Commission (0.05%)</td>
-                          <td className="px-4 py-3 text-sm text-yellow-600 text-right">{formaterDevise(results.commission)}</td>
+                          <td>Commission (0.05%)</td>
+                          <td className="text-right text-yellow-400">{formaterDevise(results.commission)}</td>
                         </tr>
-                        <tr className="bg-gray-50 font-semibold">
-                          <td className="px-4 py-3 text-sm text-gray-900">Total à payer</td>
-                          <td className="px-4 py-3 text-sm text-purple-600 text-right">{formaterDevise(results.total)}</td>
+                        <tr className="bg-dark-700/50 font-semibold">
+                          <td>Total à payer</td>
+                          <td className="text-right text-primary-400">{formaterDevise(results.total)}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -163,18 +163,18 @@ const CompteCourant = () => {
                 </Card>
 
                 {/* Conseils */}
-                <Card title="💡 Conseils">
-                  <ul className="space-y-2 text-sm text-gray-700">
+                <Card title="Conseils">
+                  <ul className="space-y-2 text-sm text-gray-300">
                     <li className="flex items-start">
-                      <span className="text-green-500 mr-2">✓</span>
+                      <span className="text-green-400 mr-2">✓</span>
                       <span>Évitez les découverts autant que possible pour minimiser les frais</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="text-green-500 mr-2">✓</span>
+                      <span className="text-green-400 mr-2">✓</span>
                       <span>Négociez un taux de découvert autorisé avec votre banque</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="text-green-500 mr-2">✓</span>
+                      <span className="text-green-400 mr-2">✓</span>
                       <span>Surveillez régulièrement votre solde pour éviter les frais</span>
                     </li>
                   </ul>
@@ -183,14 +183,14 @@ const CompteCourant = () => {
                 {/* Formules */}
                 <Card title="Formules Utilisées">
                   <div className="space-y-3 text-sm">
-                    <div className="p-3 bg-gray-50 rounded">
-                      <strong>Intérêts Débiteurs :</strong> I = (Montant × Taux × Jours) / 365
+                    <div className="p-3 bg-dark-700/50 border border-dark-600/50">
+                      <strong className="text-gray-300">Intérêts Débiteurs :</strong> <span className="text-gray-400">I = (Montant × Taux × Jours) / 365</span>
                     </div>
-                    <div className="p-3 bg-gray-50 rounded">
-                      <strong>Commission :</strong> C = Montant × 0.0005
+                    <div className="p-3 bg-dark-700/50 border border-dark-600/50">
+                      <strong className="text-gray-300">Commission :</strong> <span className="text-gray-400">C = Montant × 0.0005</span>
                     </div>
-                    <div className="p-3 bg-gray-50 rounded">
-                      <strong>Agios Totaux :</strong> Total = Intérêts + Commission
+                    <div className="p-3 bg-dark-700/50 border border-dark-600/50">
+                      <strong className="text-gray-300">Agios Totaux :</strong> <span className="text-gray-400">Total = Intérêts + Commission</span>
                     </div>
                   </div>
                 </Card>

@@ -5,11 +5,11 @@
 /**
  * Formate un nombre en devise
  * @param {number} montant - Montant à formater
- * @param {string} devise - Code de la devise (défaut: EUR)
+ * @param {string} devise - Code de la devise (défaut: TND)
  * @returns {string} Montant formaté
  */
-export const formaterDevise = (montant, devise = 'EUR') => {
-  return new Intl.NumberFormat('fr-FR', {
+export const formaterDevise = (montant, devise = 'TND') => {
+  return new Intl.NumberFormat('fr-TN', {
     style: 'currency',
     currency: devise,
   }).format(montant);

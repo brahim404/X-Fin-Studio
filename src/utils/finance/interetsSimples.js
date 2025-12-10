@@ -26,6 +26,7 @@ export const calculerValeurAcquise = (capital, taux, duree) => {
 
 /**
  * Calcule l'évolution d'un compte d'épargne avec versements mensuels
+ * Utilise l'intérêt composé avec capitalisation mensuelle
  * @param {number} capitalInitial - Capital de départ
  * @param {number} versementMensuel - Montant versé chaque mois
  * @param {number} tauxAnnuel - Taux d'intérêt annuel (en décimal)

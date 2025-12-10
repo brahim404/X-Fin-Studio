@@ -12,14 +12,10 @@ import Card from '../components/common/Card';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
 import {
-  calculerRendementPortefeuille,
-  calculerVolatilitePortefeuille,
-  calculerRatioSharpe,
   genererFrontiereEfficiente,
   optimiserPortefeuilleDeuxActifs,
   calculerStatistiquesPortefeuille,
 } from '../utils/finance/portefeuille';
-import { formaterPourcentage } from '../utils/helpers';
 
 ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend);
 
@@ -312,7 +308,9 @@ const Portefeuille = () => {
                       <div className="text-center p-4 bg-cyan-50 rounded-lg">
                         <div className="text-sm text-gray-600 mb-1">Amélioration</div>
                         <div className="text-xl font-bold text-cyan-600">
-                          {((results.optimal.ratioSharpe - results.stats.ratioSharpe) / results.stats.ratioSharpe * 100).toFixed(1)}%
+                          {results.stats.ratioSharpe > 0
+                            ? ((results.optimal.ratioSharpe - results.stats.ratioSharpe) / results.stats.ratioSharpe * 100).toFixed(1)
+                            : 'N/A'}%
                         </div>
                       </div>
                     </div>

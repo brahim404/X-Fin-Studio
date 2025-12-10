@@ -64,35 +64,39 @@ export const calculerRatioSharpe = (rendementPortefeuille, tauxSansRisque, volat
 
 /**
  * Génère des points pour la frontière efficiente
- * @param {Array} actifs - Liste des actifs [{nom, rendement, volatilite}]
- * @param {Array} correlations - Matrice de corrélation
+ * Note: Cette fonction ne supporte que 2 actifs exactement
+ * @param {Array} actifs - Liste de 2 actifs [{nom, rendement, volatilite}]
+ * @param {Array} correlations - Matrice de corrélation 2x2
  * @param {number} nombrePoints - Nombre de points à générer
  * @returns {Array} Points de la frontière efficiente
  */
 export const genererFrontiereEfficiente = (actifs, correlations, nombrePoints = 50) => {
   const points = [];
   
+  // Validation: cette fonction ne supporte que 2 actifs
+  if (actifs.length !== 2) {
+    console.warn('genererFrontiereEfficiente ne supporte que 2 actifs exactement');
+    return points;
+  }
+  
   // Générer différentes allocations
   for (let i = 0; i <= nombrePoints; i++) {
     const poids1 = i / nombrePoints;
     const poids2 = 1 - poids1;
     
-    // Pour simplification, on travaille avec 2 actifs
-    if (actifs.length >= 2) {
-      const allocation = [
-        { ...actifs[0], poids: poids1 },
-        { ...actifs[1], poids: poids2 },
-      ];
-      
-      const rendement = calculerRendementPortefeuille(allocation);
-      const volatilite = calculerVolatilitePortefeuille(allocation, correlations);
-      
-      points.push({
-        rendement: Math.round(rendement * 10000) / 100,
-        volatilite: Math.round(volatilite * 10000) / 100,
-        poids: [poids1, poids2],
-      });
-    }
+    const allocation = [
+      { ...actifs[0], poids: poids1 },
+      { ...actifs[1], poids: poids2 },
+    ];
+    
+    const rendement = calculerRendementPortefeuille(allocation);
+    const volatilite = calculerVolatilitePortefeuille(allocation, correlations);
+    
+    points.push({
+      rendement: Math.round(rendement * 10000) / 100,
+      volatilite: Math.round(volatilite * 10000) / 100,
+      poids: [poids1, poids2],
+    });
   }
   
   return points;

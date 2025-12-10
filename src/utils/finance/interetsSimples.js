@@ -39,23 +39,35 @@ export const calculerEpargneAvecVersements = (
   dureeAnnees
 ) => {
   const evolution = [];
+  const tauxMensuel = tauxAnnuel / 12;
   let capitalActuel = capitalInitial;
   
   for (let annee = 0; annee <= dureeAnnees; annee++) {
-    const interetsAnnee = capitalActuel * tauxAnnuel;
-    const versementsAnnee = versementMensuel * 12;
+    const capitalDebut = capitalActuel;
+    let interetsAnnee = 0;
+    let versementsAnnee = 0;
+    
+    // Pour chaque mois de l'année (sauf l'année 0)
+    if (annee > 0) {
+      for (let mois = 0; mois < 12; mois++) {
+        // Calcul des intérêts du mois sur le capital actuel
+        const interetMois = capitalActuel * tauxMensuel;
+        capitalActuel += interetMois;
+        interetsAnnee += interetMois;
+        
+        // Ajout du versement mensuel
+        capitalActuel += versementMensuel;
+        versementsAnnee += versementMensuel;
+      }
+    }
     
     evolution.push({
       annee,
-      capitalDebut: capitalActuel,
-      versements: annee === 0 ? 0 : versementsAnnee,
-      interets: annee === 0 ? 0 : interetsAnnee,
-      capitalFin: annee === 0 ? capitalActuel : capitalActuel + versementsAnnee + interetsAnnee,
+      capitalDebut: Math.round(capitalDebut * 100) / 100,
+      versements: Math.round(versementsAnnee * 100) / 100,
+      interets: Math.round(interetsAnnee * 100) / 100,
+      capitalFin: Math.round(capitalActuel * 100) / 100,
     });
-    
-    if (annee < dureeAnnees) {
-      capitalActuel = capitalActuel + versementsAnnee + interetsAnnee;
-    }
   }
   
   return evolution;

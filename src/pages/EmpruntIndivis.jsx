@@ -4,7 +4,6 @@ import Card from '../components/common/Card';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
 import {
-  calculerMensualiteConstante,
   genererTableauAmortissementConstant,
   genererTableauAmortissementLineaire,
   genererTableauAmortissementInFine,

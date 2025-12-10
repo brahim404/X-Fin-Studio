@@ -15,7 +15,7 @@ const Home = () => {
     {
       id: 'compte-courant',
       title: 'Compte Courant',
-      description: 'Calculez les agios et frais de découvert',
+      description: 'Simulez les agios et frais de découvert',
       icon: '🏧',
       path: '/compte-courant',
       color: 'from-purple-500 to-purple-600',

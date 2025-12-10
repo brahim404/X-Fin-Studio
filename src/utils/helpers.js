@@ -105,7 +105,13 @@ export const exporterCSV = (data, filename) => {
   const headers = Object.keys(data[0]);
   const csv = [
     headers.join(','),
-    ...data.map(row => headers.map(header => row[header]).join(','))
+    ...data.map(row => headers.map(header => {
+      const value = String(row[header] ?? '');
+      // Escape values containing comma, quote, or newline
+      return value.includes(',') || value.includes('"') || value.includes('\n')
+        ? `"${value.replace(/"/g, '""')}"`
+        : value;
+    }).join(','))
   ].join('\n');
   
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });

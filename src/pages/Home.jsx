@@ -21,53 +21,32 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-dark-900 relative overflow-hidden">
-      {/* Angular lighting effect from left */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -left-1/4 top-0 w-1/2 h-full bg-gradient-to-r from-primary-500/10 via-primary-600/5 to-transparent transform -skew-x-12" />
-        <div className="absolute -left-1/4 top-1/4 w-1/3 h-1/2 bg-gradient-to-br from-primary-400/8 via-transparent to-transparent transform rotate-12" />
-        <div className="absolute left-0 bottom-0 w-2/3 h-1/3 bg-gradient-to-tr from-accent-500/5 via-transparent to-transparent" />
-        
-        {/* Grid pattern - uses CSS variables from index.css */}
-        <div 
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `linear-gradient(90deg, var(--color-primary-500) 1px, transparent 1px),
-                             linear-gradient(180deg, var(--color-primary-500) 1px, transparent 1px)`,
-            backgroundSize: '60px 60px',
-          }}
-        />
-        
-        {/* Angular lines - uses CSS variables from index.css */}
-        <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
-          <line x1="0" y1="100%" x2="60%" y2="0" stroke="url(#line-gradient)" strokeWidth="1" opacity="0.1" />
-          <line x1="20%" y1="100%" x2="80%" y2="0" stroke="url(#line-gradient)" strokeWidth="1" opacity="0.05" />
-          <defs>
-            <linearGradient id="line-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style={{ stopColor: 'var(--color-primary-500)' }} />
-              <stop offset="100%" style={{ stopColor: 'var(--color-accent-500)' }} />
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
-
+    <div className="min-h-screen relative">
       <div className="relative z-10">
         {/* Hero Section */}
         <section className="min-h-[80vh] flex items-center">
           <div className="container mx-auto px-8">
             <div className="max-w-4xl">
               <div className="animate-fade-in">
-                <p className="text-primary-400 font-medium tracking-widest uppercase mb-4">
+                <p 
+                  className="text-primary-400 font-bold tracking-[0.3em] uppercase mb-4 font-display"
+                  style={{ textShadow: '0 0 20px rgba(0, 212, 255, 0.5)' }}
+                >
                   Simulateur Financier
                 </p>
-                <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight mb-6">
-                  Maîtrisez vos
+                <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight mb-6 font-display">
+                  <span style={{ textShadow: '0 0 30px rgba(255, 255, 255, 0.1)' }}>MAÎTRISEZ VOS</span>
                   <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-accent-500">
-                    Finances
+                  <span 
+                    className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 via-primary-300 to-accent-500"
+                    style={{ 
+                      filter: 'drop-shadow(0 0 30px rgba(0, 212, 255, 0.5))',
+                    }}
+                  >
+                    FINANCES
                   </span>
                 </h1>
-                <p className="text-xl text-gray-400 max-w-2xl mb-8 leading-relaxed">
+                <p className="text-xl text-gray-400 max-w-2xl mb-8 leading-relaxed font-medium">
                   Outils de simulation professionnels pour l'épargne, les emprunts, 
                   et la gestion de portefeuille en Dinar Tunisien.
                 </p>
@@ -76,9 +55,12 @@ const Home = () => {
                   <Link
                     to="/epargne"
                     className="inline-flex items-center gap-2 bg-primary-600 text-white px-8 py-4 
-                             font-medium hover:bg-primary-500 transition-all duration-200 
-                             border border-primary-500/50 shadow-lg shadow-primary-900/30
-                             group"
+                             font-bold uppercase tracking-wider hover:bg-primary-500 transition-all duration-200 
+                             border border-primary-400/50 group clip-path-angular"
+                    style={{
+                      boxShadow: '0 0 20px rgba(0, 212, 255, 0.4), 0 0 40px rgba(0, 212, 255, 0.2)',
+                      textShadow: '0 0 10px rgba(0, 212, 255, 0.5)'
+                    }}
                   >
                     Commencer
                     <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -87,9 +69,12 @@ const Home = () => {
                   </Link>
                   <Link
                     to="/portefeuille"
-                    className="inline-flex items-center gap-2 bg-dark-700 text-gray-200 px-8 py-4 
-                             font-medium hover:bg-dark-600 transition-all duration-200 
-                             border border-dark-500/50"
+                    className="inline-flex items-center gap-2 bg-dark-800 text-gray-200 px-8 py-4 
+                             font-bold uppercase tracking-wider hover:bg-dark-700 transition-all duration-200 
+                             border border-dark-500/50 hover:border-primary-500/50 clip-path-angular"
+                    style={{
+                      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05)'
+                    }}
                   >
                     Voir les outils
                   </Link>
@@ -100,26 +85,40 @@ const Home = () => {
         </section>
 
         {/* Features Section */}
-        <section className="py-20 border-t border-dark-700/50">
+        <section className="py-20 border-t border-primary-500/20">
           <div className="container mx-auto px-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {features.map((feature, index) => (
                 <div 
                   key={index}
-                  className="group p-6 bg-dark-800/50 border border-dark-700/50 
-                           hover:border-primary-500/30 transition-all duration-300
-                           relative overflow-hidden"
-                  style={{ animationDelay: `${index * 100}ms` }}
+                  className="group p-6 bg-dark-900/80 border border-dark-700/50 
+                           hover:border-primary-500/50 transition-all duration-300
+                           relative overflow-hidden backdrop-blur-sm"
+                  style={{ 
+                    animationDelay: `${index * 100}ms`,
+                    clipPath: 'polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))'
+                  }}
                 >
-                  <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-primary-500/50 via-transparent to-transparent 
-                                opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="w-12 h-12 bg-primary-500/10 border border-primary-500/20 flex items-center justify-center mb-4">
-                    <svg className="w-6 h-6 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div 
+                    className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-primary-500 via-transparent to-transparent 
+                                opacity-50 group-hover:opacity-100 transition-opacity duration-300"
+                    style={{ boxShadow: '0 0 10px rgba(0, 212, 255, 0.5)' }}
+                  />
+                  <div 
+                    className="w-12 h-12 bg-primary-500/10 border border-primary-500/30 flex items-center justify-center mb-4"
+                    style={{ clipPath: 'polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px))' }}
+                  >
+                    <svg className="w-6 h-6 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ filter: 'drop-shadow(0 0 5px rgba(0, 212, 255, 0.5))' }}>
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={feature.icon} />
                     </svg>
                   </div>
-                  <h3 className="text-lg font-semibold text-white mb-2">{feature.title}</h3>
-                  <p className="text-gray-400 text-sm">{feature.description}</p>
+                  <h3 
+                    className="text-lg font-bold text-white mb-2 uppercase tracking-wide font-display"
+                    style={{ textShadow: '0 0 10px rgba(0, 212, 255, 0.2)' }}
+                  >
+                    {feature.title}
+                  </h3>
+                  <p className="text-gray-400 text-sm font-medium">{feature.description}</p>
                 </div>
               ))}
             </div>
@@ -127,7 +126,7 @@ const Home = () => {
         </section>
 
         {/* Quick Stats */}
-        <section className="py-16 bg-dark-800/30">
+        <section className="py-16 bg-dark-900/50 border-t border-primary-500/10">
           <div className="container mx-auto px-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[

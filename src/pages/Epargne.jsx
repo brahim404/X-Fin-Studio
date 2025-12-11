@@ -13,6 +13,7 @@ import {
 import Card from '../components/common/Card';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
+import { FormulaSection } from '../components/common/Math';
 import { calculerEpargneAvecVersements } from '../utils/finance/interetsSimples';
 import { formaterDevise, formaterPourcentage } from '../utils/helpers';
 
@@ -105,7 +106,7 @@ const Epargne = () => {
   };
 
   return (
-    <div className="min-h-screen bg-dark-900 py-8">
+    <div className="min-h-screen py-8 relative">
       <div className="container mx-auto px-6">
         <div className="mb-8 animate-fade-in">
           <h1 className="text-3xl font-bold text-white mb-2">Compte d'Épargne</h1>
@@ -114,9 +115,9 @@ const Epargne = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className={`grid grid-cols-1 gap-6 transition-all duration-700 ease-out ${results ? 'lg:grid-cols-3' : 'lg:grid-cols-1 max-w-xl mx-auto'}`}>
           {/* Formulaire */}
-          <Card className="lg:col-span-1">
+          <Card className={`lg:col-span-1 transition-all duration-700 ease-out ${results ? '' : 'lg:max-w-xl lg:w-full'}`}>
             <form onSubmit={handleCalculate}>
               <Input
                 label="Capital Initial (TND)"
@@ -171,8 +172,8 @@ const Epargne = () => {
           </Card>
 
           {/* Résultats */}
-          <div className="lg:col-span-2 space-y-6">
-            {results && (
+          {results && (
+          <div className="lg:col-span-2 space-y-6 animate-slide-in-right">
               <>
                 {/* Résumé */}
                 <Card title="Résumé">
@@ -239,21 +240,30 @@ const Epargne = () => {
 
                 {/* Formules */}
                 <Card title="Formules Utilisées">
-                  <div className="space-y-3 text-sm">
-                    <div className="p-3 bg-dark-700/50 border border-dark-600/50">
-                      <strong className="text-gray-300">Intérêts Simples :</strong> <span className="text-gray-400">I = C × t × n</span>
-                    </div>
-                    <div className="p-3 bg-dark-700/50 border border-dark-600/50">
-                      <strong className="text-gray-300">Valeur Acquise :</strong> <span className="text-gray-400">VA = C × (1 + t × n)</span>
-                    </div>
-                    <p className="text-gray-500">
-                      Où C = capital, t = taux d'intérêt, n = durée
-                    </p>
-                  </div>
+                  <FormulaSection
+                    formulas={[
+                      {
+                        label: 'Intérêts Simples',
+                        formula: 'I = C \\times t \\times n',
+                        description: 'Intérêts accumulés sur la période'
+                      },
+                      {
+                        label: 'Valeur Acquise',
+                        formula: 'V_A = C \\times (1 + t \\times n)',
+                        description: 'Capital final avec intérêts simples'
+                      },
+                      {
+                        label: 'Intérêts Composés',
+                        formula: 'V_A = C \\times (1 + t)^n',
+                        description: 'Capital final avec intérêts composés'
+                      }
+                    ]}
+                    legend="C = Capital initial, t = Taux d'intérêt, n = Durée (années)"
+                  />
                 </Card>
               </>
-            )}
           </div>
+          )}
         </div>
       </div>
     </div>

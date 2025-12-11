@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Card from '../components/common/Card';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
+import { FormulaSection } from '../components/common/Math';
 import { calculerBordereauEscompte } from '../utils/finance/escompte';
 import { formaterDevise, exporterCSV } from '../utils/helpers';
 
@@ -41,7 +42,7 @@ const Escompte = () => {
   };
 
   return (
-    <div className="min-h-screen bg-dark-900 py-8">
+    <div className="min-h-screen py-8 relative">
       <div className="container mx-auto px-6">
         <div className="mb-8 animate-fade-in">
           <h1 className="text-3xl font-bold text-white mb-2">Escompte Commercial</h1>
@@ -50,9 +51,9 @@ const Escompte = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className={`grid grid-cols-1 gap-6 transition-all duration-700 ease-out ${results ? 'lg:grid-cols-3' : 'lg:grid-cols-1 max-w-xl mx-auto'}`}>
           {/* Formulaire */}
-          <Card className="lg:col-span-1">
+          <Card className={`lg:col-span-1 transition-all duration-700 ease-out ${results ? '' : 'lg:max-w-xl lg:w-full'}`}>
             <form onSubmit={handleCalculate}>
               <Input
                 label="Taux d'Escompte Annuel (%)"
@@ -119,8 +120,8 @@ const Escompte = () => {
           </Card>
 
           {/* Résultats */}
-          <div className="lg:col-span-2 space-y-6">
-            {results && (
+          {results && (
+          <div className="lg:col-span-2 space-y-6 animate-slide-in-right">
               <>
                 {/* Résumé */}
                 <Card 
@@ -205,24 +206,35 @@ const Escompte = () => {
 
                 {/* Formules */}
                 <Card title="Formules Utilisées">
-                  <div className="space-y-3 text-sm">
-                    <div className="p-3 bg-dark-700/50 border border-dark-600/50">
-                      <strong className="text-gray-300">Escompte Commercial :</strong> <span className="text-gray-400">E = V × t × n / 360</span>
-                    </div>
-                    <div className="p-3 bg-dark-700/50 border border-dark-600/50">
-                      <strong className="text-gray-300">Valeur Actuelle :</strong> <span className="text-gray-400">VA = V - E - Commission - Frais</span>
-                    </div>
-                    <div className="p-3 bg-dark-700/50 border border-dark-600/50">
-                      <strong className="text-gray-300">Commission :</strong> <span className="text-gray-400">C = V × 0.006 (0.6%)</span>
-                    </div>
-                    <p className="text-gray-500">
-                      Où V = valeur nominale, t = taux d'escompte, n = nombre de jours
-                    </p>
-                  </div>
+                  <FormulaSection
+                    formulas={[
+                      {
+                        label: 'Escompte Commercial',
+                        formula: 'E = \\frac{V \\times t \\times n}{360}',
+                        description: 'Montant de l\'escompte (base 360 jours)'
+                      },
+                      {
+                        label: 'Valeur Actuelle',
+                        formula: 'V_A = V - E - C - F',
+                        description: 'Valeur nette après déduction des frais'
+                      },
+                      {
+                        label: 'Commission',
+                        formula: 'C = V \\times 0.006',
+                        description: 'Commission bancaire (0.6%)'
+                      },
+                      {
+                        label: 'Taux Réel',
+                        formula: 't_r = \\frac{E + C + F}{V_A} \\times \\frac{360}{n}',
+                        description: 'Taux effectif de l\'opération'
+                      }
+                    ]}
+                    legend="V = Valeur nominale, t = Taux d'escompte, n = Nombre de jours, F = Frais fixes"
+                  />
                 </Card>
               </>
-            )}
           </div>
+          )}
         </div>
       </div>
     </div>

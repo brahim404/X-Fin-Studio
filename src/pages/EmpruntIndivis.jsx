@@ -3,6 +3,7 @@ import { Line } from 'react-chartjs-2';
 import Card from '../components/common/Card';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
+import { FormulaSection } from '../components/common/Math';
 import {
   genererTableauAmortissementConstant,
   genererTableauAmortissementLineaire,
@@ -123,7 +124,7 @@ const EmpruntIndivis = () => {
   };
 
   return (
-    <div className="min-h-screen bg-dark-900 py-8">
+    <div className="min-h-screen py-8 relative">
       <div className="container mx-auto px-6">
         <div className="mb-8 animate-fade-in">
           <h1 className="text-3xl font-bold text-white mb-2">Emprunts Indivis</h1>
@@ -132,9 +133,9 @@ const EmpruntIndivis = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className={`grid grid-cols-1 gap-6 transition-all duration-700 ease-out ${results ? 'lg:grid-cols-3' : 'lg:grid-cols-1 max-w-xl mx-auto'}`}>
           {/* Formulaire */}
-          <Card className="lg:col-span-1">
+          <Card className={`lg:col-span-1 transition-all duration-700 ease-out ${results ? '' : 'lg:max-w-xl lg:w-full'}`}>
             <form onSubmit={handleCalculate}>
               <Input
                 label="Montant Emprunté (TND)"
@@ -194,8 +195,8 @@ const EmpruntIndivis = () => {
           </Card>
 
           {/* Résultats */}
-          <div className="lg:col-span-2 space-y-6">
-            {results && (
+          {results && (
+          <div className="lg:col-span-2 space-y-6 animate-slide-in-right">
               <>
                 {/* Résumé */}
                 <Card 
@@ -278,26 +279,35 @@ const EmpruntIndivis = () => {
 
                 {/* Formules */}
                 <Card title="Formules Utilisées">
-                  <div className="space-y-3 text-sm">
-                    {formData.typeAmortissement === 'constant' && (
-                      <div className="p-3 bg-dark-700/50 border border-dark-600/50">
-                        <strong className="text-gray-300">Mensualité Constante :</strong> <span className="text-gray-400">M = C × [t / (1 - (1+t)^-n)]</span>
-                      </div>
-                    )}
-                    <div className="p-3 bg-dark-700/50 border border-dark-600/50">
-                      <strong className="text-gray-300">Intérêts :</strong> <span className="text-gray-400">I = Capital Restant × Taux Mensuel</span>
-                    </div>
-                    <div className="p-3 bg-dark-700/50 border border-dark-600/50">
-                      <strong className="text-gray-300">Amortissement :</strong> <span className="text-gray-400">A = Mensualité - Intérêts</span>
-                    </div>
-                    <p className="text-gray-500">
-                      Où C = capital, t = taux mensuel, n = nombre de mois
-                    </p>
-                  </div>
+                  <FormulaSection
+                    formulas={[
+                      ...(formData.typeAmortissement === 'constant' ? [{
+                        label: 'Mensualité Constante',
+                        formula: 'M = C \\times \\frac{t}{1 - (1+t)^{-n}}',
+                        description: 'Annuité constante (méthode française)'
+                      }] : []),
+                      {
+                        label: 'Intérêts',
+                        formula: 'I_k = C_k \\times t',
+                        description: 'Intérêts de la période k'
+                      },
+                      {
+                        label: 'Amortissement',
+                        formula: 'A_k = M - I_k',
+                        description: 'Part du capital remboursé'
+                      },
+                      {
+                        label: 'Capital Restant',
+                        formula: 'C_{k+1} = C_k - A_k',
+                        description: 'Capital restant dû après période k'
+                      }
+                    ]}
+                    legend="C = Capital, t = Taux mensuel, n = Nombre de mois, M = Mensualité"
+                  />
                 </Card>
               </>
-            )}
           </div>
+          )}
         </div>
       </div>
     </div>

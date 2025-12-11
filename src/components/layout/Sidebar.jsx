@@ -18,25 +18,33 @@ const Sidebar = ({ isCollapsed, onToggle }) => {
 
   return (
     <aside 
-      className={`fixed left-0 top-0 h-screen bg-dark-800 border-r border-dark-700/50 
+      className={`fixed left-0 top-0 h-screen bg-dark-900/95 backdrop-blur-md border-r border-dark-700/50 
                   transition-all duration-300 z-50 flex flex-col
                   ${isCollapsed ? 'w-16' : 'w-64'}`}
+      style={{
+        boxShadow: '2px 0 30px rgba(0, 0, 0, 0.5), inset -1px 0 0 rgba(0, 212, 255, 0.1)'
+      }}
     >
       {/* Logo */}
-      <div className="h-16 flex items-center justify-between px-4 border-b border-dark-700/50">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center clip-path-angular">
-            <span className="text-white font-bold text-sm">X</span>
+      <div className="h-16 flex items-center justify-between px-4 border-b border-primary-500/20">
+        <Link to="/" className="flex items-center gap-2 group">
+          <div 
+            className="w-9 h-9 bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center clip-path-angular transition-all duration-300 group-hover:scale-110"
+            style={{
+              boxShadow: '0 0 20px rgba(0, 212, 255, 0.4)'
+            }}
+          >
+            <span className="text-white font-bold text-sm font-display">X</span>
           </div>
           {!isCollapsed && (
-            <span className="text-lg font-bold text-white">
-              <span className="text-primary-400">X</span>Fin Studio
+            <span className="text-lg font-bold text-white font-display tracking-wider">
+              <span className="text-primary-400" style={{ textShadow: '0 0 10px rgba(0, 212, 255, 0.5)' }}>X</span>FIN
             </span>
           )}
         </Link>
         <button
           onClick={onToggle}
-          className="text-gray-400 hover:text-white transition-colors p-1"
+          className="text-gray-400 hover:text-primary-400 transition-all duration-200 p-1 hover:scale-110"
           aria-label={isCollapsed ? 'Développer la barre latérale' : 'Réduire la barre latérale'}
         >
           <svg className={`w-5 h-5 transition-transform duration-300 ${isCollapsed ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -63,10 +71,10 @@ const Sidebar = ({ isCollapsed, onToggle }) => {
       </nav>
 
       {/* Footer */}
-      <div className={`p-4 border-t border-dark-700/50 ${isCollapsed ? 'text-center' : ''}`}>
+      <div className={`p-4 border-t border-primary-500/10 ${isCollapsed ? 'text-center' : ''}`}>
         {!isCollapsed && (
-          <p className="text-xs text-gray-500">
-            Simulateur Financier
+          <p className="text-xs text-primary-500/50 font-medium uppercase tracking-widest">
+            Finance Sim
           </p>
         )}
       </div>

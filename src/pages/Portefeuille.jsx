@@ -11,6 +11,7 @@ import {
 import Card from '../components/common/Card';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
+import { FormulaSection } from '../components/common/Math';
 import {
   genererFrontiereEfficiente,
   optimiserPortefeuilleDeuxActifs,
@@ -168,7 +169,7 @@ const Portefeuille = () => {
   };
 
   return (
-    <div className="min-h-screen bg-dark-900 py-8">
+    <div className="min-h-screen py-8 relative">
       <div className="container mx-auto px-6">
         <div className="mb-8 animate-fade-in">
           <h1 className="text-3xl font-bold text-white mb-2">Gestion de Portefeuille</h1>
@@ -177,9 +178,9 @@ const Portefeuille = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className={`grid grid-cols-1 gap-6 transition-all duration-700 ease-out ${results ? 'lg:grid-cols-3' : 'lg:grid-cols-1 max-w-xl mx-auto'}`}>
           {/* Formulaire */}
-          <Card className="lg:col-span-1">
+          <Card className={`lg:col-span-1 transition-all duration-700 ease-out ${results ? '' : 'lg:max-w-xl lg:w-full'}`}>
             <form onSubmit={handleCalculate}>
               <h3 className="text-lg font-semibold text-white mb-4">Actifs du Portefeuille</h3>
               
@@ -258,8 +259,8 @@ const Portefeuille = () => {
           </Card>
 
           {/* Résultats */}
-          <div className="lg:col-span-2 space-y-6">
-            {results && (
+          {results && (
+          <div className="lg:col-span-2 space-y-6 animate-slide-in-right">
               <>
                 {/* Statistiques Actuelles */}
                 <Card title="Statistiques du Portefeuille Actuel">
@@ -380,20 +381,31 @@ const Portefeuille = () => {
 
                 {/* Formules */}
                 <Card title="Formules Utilisées">
-                  <div className="space-y-3 text-sm">
-                    <div className="p-3 bg-dark-700/50 border border-dark-600/50">
-                      <strong className="text-gray-300">Rendement du Portefeuille :</strong> <span className="text-gray-400">Rp = Σ(wi × Ri)</span>
-                    </div>
-                    <div className="p-3 bg-dark-700/50 border border-dark-600/50">
-                      <strong className="text-gray-300">Volatilité du Portefeuille :</strong> <span className="text-gray-400">σp = √(Σ Σ wi × wj × σi × σj × ρij)</span>
-                    </div>
-                    <div className="p-3 bg-dark-700/50 border border-dark-600/50">
-                      <strong className="text-gray-300">Ratio de Sharpe :</strong> <span className="text-gray-400">S = (Rp - Rf) / σp</span>
-                    </div>
-                    <p className="text-gray-500">
-                      Où w = poids, R = rendement, σ = volatilité, ρ = corrélation, Rf = taux sans risque
-                    </p>
-                  </div>
+                  <FormulaSection
+                    formulas={[
+                      {
+                        label: 'Rendement du Portefeuille',
+                        formula: 'R_p = \\sum_{i=1}^{n} w_i \\cdot R_i',
+                        description: 'Moyenne pondérée des rendements'
+                      },
+                      {
+                        label: 'Volatilité du Portefeuille',
+                        formula: '\\sigma_p = \\sqrt{\\sum_{i}\\sum_{j} w_i w_j \\sigma_i \\sigma_j \\rho_{ij}}',
+                        description: 'Risque total du portefeuille'
+                      },
+                      {
+                        label: 'Ratio de Sharpe',
+                        formula: 'S = \\frac{R_p - R_f}{\\sigma_p}',
+                        description: 'Rendement excédentaire par unité de risque'
+                      },
+                      {
+                        label: 'Variance (2 actifs)',
+                        formula: '\\sigma_p^2 = w_1^2\\sigma_1^2 + w_2^2\\sigma_2^2 + 2w_1w_2\\sigma_1\\sigma_2\\rho_{12}',
+                        description: 'Formule de variance pour deux actifs'
+                      }
+                    ]}
+                    legend="w = poids, R = rendement, σ = volatilité, ρ = corrélation, R_f = taux sans risque"
+                  />
                 </Card>
 
                 {/* Conseils */}
@@ -414,8 +426,8 @@ const Portefeuille = () => {
                   </ul>
                 </Card>
               </>
-            )}
           </div>
+          )}
         </div>
       </div>
     </div>

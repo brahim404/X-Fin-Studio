@@ -12,6 +12,7 @@ import {
 import Card from '../components/common/Card';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
+import { FormulaSection } from '../components/common/Math';
 import { formaterDevise, formaterPourcentage } from '../utils/helpers';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -124,7 +125,7 @@ const EmpruntObligataire = () => {
   };
 
   return (
-    <div className="min-h-screen bg-dark-900 py-8">
+    <div className="min-h-screen py-8 relative">
       <div className="container mx-auto px-6">
         <div className="mb-8 animate-fade-in">
           <h1 className="text-3xl font-bold text-white mb-2">Emprunts Obligataires</h1>
@@ -133,9 +134,9 @@ const EmpruntObligataire = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className={`grid grid-cols-1 gap-6 transition-all duration-700 ease-out ${results ? 'lg:grid-cols-3' : 'lg:grid-cols-1 max-w-xl mx-auto'}`}>
           {/* Formulaire */}
-          <Card className="lg:col-span-1">
+          <Card className={`lg:col-span-1 transition-all duration-700 ease-out ${results ? '' : 'lg:max-w-xl lg:w-full'}`}>
             <form onSubmit={handleCalculate}>
               <Input
                 label="Montant de l'Émission (TND)"
@@ -214,8 +215,8 @@ const EmpruntObligataire = () => {
           </Card>
 
           {/* Résultats */}
-          <div className="lg:col-span-2 space-y-6">
-            {results && (
+          {results && (
+          <div className="lg:col-span-2 space-y-6 animate-slide-in-right">
               <>
                 {/* Résumé */}
                 <Card title="Caractéristiques de l'Émission">
@@ -328,24 +329,35 @@ const EmpruntObligataire = () => {
 
                 {/* Formules */}
                 <Card title="Formules Utilisées">
-                  <div className="space-y-3 text-sm">
-                    <div className="p-3 bg-dark-700/50 border border-dark-600/50">
-                      <strong className="text-gray-300">Coupon Annuel :</strong> <span className="text-gray-400">C = Valeur Nominale × Taux du Coupon</span>
-                    </div>
-                    <div className="p-3 bg-dark-700/50 border border-dark-600/50">
-                      <strong className="text-gray-300">Prime d'Émission :</strong> <span className="text-gray-400">PE = Valeur Nominale - Prix d'Émission</span>
-                    </div>
-                    <div className="p-3 bg-dark-700/50 border border-dark-600/50">
-                      <strong className="text-gray-300">Prime de Remboursement :</strong> <span className="text-gray-400">PR = Prix de Remboursement - Valeur Nominale</span>
-                    </div>
-                    <div className="p-3 bg-dark-700/50 border border-dark-600/50">
-                      <strong className="text-gray-300">Rendement :</strong> <span className="text-gray-400">R = Coût Total / Montant Réel / Durée</span>
-                    </div>
-                  </div>
+                  <FormulaSection
+                    formulas={[
+                      {
+                        label: 'Coupon Annuel',
+                        formula: 'C = V_N \\times t_c',
+                        description: 'Intérêt annuel par obligation'
+                      },
+                      {
+                        label: 'Prime d\'Émission',
+                        formula: 'P_E = V_N - P_{em}',
+                        description: 'Différence entre valeur nominale et prix d\'émission'
+                      },
+                      {
+                        label: 'Prime de Remboursement',
+                        formula: 'P_R = P_{remb} - V_N',
+                        description: 'Différence entre prix de remboursement et valeur nominale'
+                      },
+                      {
+                        label: 'Taux de Rendement Actuariel',
+                        formula: 'P_{em} = \\sum_{k=1}^{n} \\frac{C}{(1+r)^k} + \\frac{P_{remb}}{(1+r)^n}',
+                        description: 'Taux r tel que le prix égale les flux actualisés'
+                      }
+                    ]}
+                    legend="V_N = Valeur nominale, t_c = Taux coupon, P_{em} = Prix émission, P_{remb} = Prix remboursement"
+                  />
                 </Card>
               </>
-            )}
           </div>
+          )}
         </div>
       </div>
     </div>

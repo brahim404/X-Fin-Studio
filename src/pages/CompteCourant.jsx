@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Card from '../components/common/Card';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
+import { FormulaSection } from '../components/common/Math';
 import { calculerAgios } from '../utils/finance/interetsSimples';
 import { formaterDevise, formaterPourcentage } from '../utils/helpers';
 
@@ -33,7 +34,7 @@ const CompteCourant = () => {
   };
 
   return (
-    <div className="min-h-screen bg-dark-900 py-8">
+    <div className="min-h-screen py-8 relative">
       <div className="container mx-auto px-6">
         <div className="mb-8 animate-fade-in">
           <h1 className="text-3xl font-bold text-white mb-2">Compte Courant - Agios</h1>
@@ -42,9 +43,9 @@ const CompteCourant = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className={`grid grid-cols-1 gap-6 transition-all duration-700 ease-out ${results ? 'lg:grid-cols-3' : 'lg:grid-cols-1 max-w-xl mx-auto'}`}>
           {/* Formulaire */}
-          <Card className="lg:col-span-1">
+          <Card className={`lg:col-span-1 transition-all duration-700 ease-out ${results ? '' : 'lg:max-w-xl lg:w-full'}`}>
             <form onSubmit={handleCalculate}>
               <Input
                 label="Montant du Découvert (TND)"
@@ -90,8 +91,8 @@ const CompteCourant = () => {
           </Card>
 
           {/* Résultats */}
-          <div className="lg:col-span-2 space-y-6">
-            {results && (
+          {results && (
+          <div className="lg:col-span-2 space-y-6 animate-slide-in-right">
               <>
                 {/* Résumé */}
                 <Card title="Détail des Frais">
@@ -182,21 +183,30 @@ const CompteCourant = () => {
 
                 {/* Formules */}
                 <Card title="Formules Utilisées">
-                  <div className="space-y-3 text-sm">
-                    <div className="p-3 bg-dark-700/50 border border-dark-600/50">
-                      <strong className="text-gray-300">Intérêts Débiteurs :</strong> <span className="text-gray-400">I = (Montant × Taux × Jours) / 365</span>
-                    </div>
-                    <div className="p-3 bg-dark-700/50 border border-dark-600/50">
-                      <strong className="text-gray-300">Commission :</strong> <span className="text-gray-400">C = Montant × 0.0005</span>
-                    </div>
-                    <div className="p-3 bg-dark-700/50 border border-dark-600/50">
-                      <strong className="text-gray-300">Agios Totaux :</strong> <span className="text-gray-400">Total = Intérêts + Commission</span>
-                    </div>
-                  </div>
+                  <FormulaSection
+                    formulas={[
+                      {
+                        label: 'Intérêts Débiteurs',
+                        formula: 'I = \\frac{M \\times t \\times j}{365}',
+                        description: 'Calcul des intérêts sur la période'
+                      },
+                      {
+                        label: 'Commission',
+                        formula: 'C = M \\times 0.0005',
+                        description: 'Commission bancaire (0.05%)'
+                      },
+                      {
+                        label: 'Agios Totaux',
+                        formula: 'A_{total} = I + C',
+                        description: 'Total des frais bancaires'
+                      }
+                    ]}
+                    legend="M = Montant du découvert, t = Taux annuel, j = Nombre de jours"
+                  />
                 </Card>
               </>
-            )}
           </div>
+          )}
         </div>
       </div>
     </div>

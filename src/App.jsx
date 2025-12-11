@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import Sidebar from './components/layout/Sidebar';
 import Footer from './components/layout/Footer';
 import Home from './pages/Home';
 import Epargne from './pages/Epargne';
 import CompteCourant from './pages/CompteCourant';
 import Escompte from './pages/Escompte';
+import EmpruntIndivis from './pages/EmpruntIndivis';
+import EmpruntObligataire from './pages/EmpruntObligataire';
+import Portefeuille from './pages/Portefeuille';
+import { ParticlesBackground, Spotlight, AnimatedGridPattern, Meteors } from './components/animate-ui';
 
 function App() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -13,14 +18,49 @@ function App() {
   return (
     <Router>
       <div className="flex min-h-screen bg-dark-950 relative overflow-hidden">
+        {/* Animate UI Background Effects */}
+        <ParticlesBackground 
+          className="z-0 opacity-60" 
+          particleCount={40} 
+          particleColor="rgba(0, 212, 255, 0.4)"
+        />
+        <Spotlight className="z-10" fill="rgba(0, 212, 255, 0.12)" />
+        <AnimatedGridPattern 
+          className="z-0 opacity-30" 
+          numSquares={20} 
+          maxOpacity={0.3}
+          duration={5}
+        />
+        <Meteors number={12} className="z-0" />
+        
         {/* Aggressive Angular lighting effect - Opera GX Style */}
         <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
           {/* Main neon glow from left */}
-          <div className="absolute -left-1/4 top-0 w-1/2 h-full bg-gradient-to-r from-primary-500/20 via-primary-600/10 to-transparent transform -skew-x-12" />
+          <motion.div 
+            className="absolute -left-1/4 top-0 w-1/2 h-full bg-gradient-to-r from-primary-500/20 via-primary-600/10 to-transparent transform -skew-x-12"
+            animate={{
+              opacity: [0.8, 1, 0.8],
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          />
           <div className="absolute -left-1/4 top-1/4 w-1/3 h-1/2 bg-gradient-to-br from-primary-400/15 via-transparent to-transparent transform rotate-12" />
           
           {/* Accent glow from bottom */}
-          <div className="absolute left-0 bottom-0 w-full h-1/2 bg-gradient-to-t from-accent-500/8 via-accent-600/3 to-transparent" />
+          <motion.div 
+            className="absolute left-0 bottom-0 w-full h-1/2 bg-gradient-to-t from-accent-500/8 via-accent-600/3 to-transparent"
+            animate={{
+              opacity: [0.6, 1, 0.6],
+            }}
+            transition={{
+              duration: 5,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          />
           <div className="absolute right-0 bottom-0 w-1/3 h-1/3 bg-gradient-to-tl from-accent-500/10 via-transparent to-transparent" />
           
           {/* Cyber grid pattern */}
@@ -73,6 +113,9 @@ function App() {
               <Route path="/epargne" element={<Epargne />} />
               <Route path="/compte-courant" element={<CompteCourant />} />
               <Route path="/escompte" element={<Escompte />} />
+              <Route path="/emprunt-indivis" element={<EmpruntIndivis />} />
+              <Route path="/emprunt-obligataire" element={<EmpruntObligataire />} />
+              <Route path="/portefeuille" element={<Portefeuille />} />
             </Routes>
           </main>
           <Footer />

@@ -1,10 +1,13 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { SlidingNumber, StaggerContainer, StaggerItem } from '../components/animate-ui';
 
 const TiltLink = ({ to, children, className, style, primary = false }) => {
   const linkRef = useRef(null);
   const [tiltStyle, setTiltStyle] = useState({});
   const [glowPosition, setGlowPosition] = useState({ x: 50, y: 50 });
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseMove = (e) => {
     if (!linkRef.current) return;
@@ -28,6 +31,7 @@ const TiltLink = ({ to, children, className, style, primary = false }) => {
   const handleMouseLeave = () => {
     setTiltStyle({ transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)' });
     setGlowPosition({ x: 50, y: 50 });
+    setIsHovered(false);
   };
 
   return (
@@ -38,12 +42,23 @@ const TiltLink = ({ to, children, className, style, primary = false }) => {
       style={{ ...style, ...tiltStyle, transition: 'transform 0.15s ease-out' }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      onMouseEnter={() => setIsHovered(true)}
     >
-      <div 
-        className="absolute inset-0 pointer-events-none transition-opacity duration-200"
+      <motion.div 
+        className="absolute inset-0 pointer-events-none"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isHovered ? 1 : 0 }}
         style={{
           background: `radial-gradient(circle at ${glowPosition.x}% ${glowPosition.y}%, ${primary ? 'rgba(0, 212, 255, 0.4)' : 'rgba(0, 212, 255, 0.2)'} 0%, transparent 60%)`,
-          opacity: tiltStyle.transform && tiltStyle.transform.includes('scale(1.02)') ? 1 : 0,
+        }}
+      />
+      <motion.div 
+        className="absolute inset-0 pointer-events-none"
+        initial={{ x: '-100%' }}
+        animate={{ x: isHovered ? '100%' : '-100%' }}
+        transition={{ duration: 0.6, ease: 'easeInOut' }}
+        style={{
+          background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent)',
         }}
       />
       <div 
@@ -83,31 +98,61 @@ const Home = () => {
         <section className="min-h-[80vh] flex items-center">
           <div className="container mx-auto px-8">
             <div className="max-w-4xl">
-              <div className="animate-fade-in">
-                <p 
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+              >
+                <motion.p 
                   className="text-primary-400 font-bold tracking-[0.3em] uppercase mb-4 font-display"
                   style={{ textShadow: '0 0 20px rgba(0, 212, 255, 0.5)' }}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
                 >
                   Simulateur Financier
-                </p>
-                <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight mb-6 font-display">
+                </motion.p>
+                <motion.h1 
+                  className="text-5xl md:text-7xl font-bold text-white leading-tight mb-6 font-display"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
                   <span style={{ textShadow: '0 0 30px rgba(255, 255, 255, 0.1)' }}>MAÎTRISEZ VOS</span>
                   <br />
-                  <span 
+                  <motion.span 
                     className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 via-primary-300 to-accent-500"
                     style={{ 
                       filter: 'drop-shadow(0 0 30px rgba(0, 212, 255, 0.5))',
                     }}
+                    animate={{
+                      backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+                    }}
+                    transition={{
+                      duration: 5,
+                      repeat: Infinity,
+                      ease: 'linear',
+                    }}
                   >
                     FINANCES
-                  </span>
-                </h1>
-                <p className="text-xl text-gray-400 max-w-2xl mb-8 leading-relaxed font-medium">
+                  </motion.span>
+                </motion.h1>
+                <motion.p 
+                  className="text-xl text-gray-400 max-w-2xl mb-8 leading-relaxed font-medium"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.4 }}
+                >
                   Outils de simulation professionnels pour l'épargne, les emprunts, 
                   et la gestion de portefeuille en Dinar Tunisien.
-                </p>
+                </motion.p>
                 
-                <div className="flex flex-wrap gap-4">
+                <motion.div 
+                  className="flex flex-wrap gap-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                >
                   <TiltLink
                     to="/epargne"
                     primary
@@ -115,6 +160,7 @@ const Home = () => {
                              font-bold uppercase tracking-wider hover:bg-primary-500 transition-all duration-200 
                              border border-primary-400/50 group clip-path-angular"
                     style={{
+                      clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))',
                       boxShadow: '0 0 20px rgba(0, 212, 255, 0.4), 0 0 40px rgba(0, 212, 255, 0.2)',
                       textShadow: '0 0 10px rgba(0, 212, 255, 0.5)'
                     }}
@@ -130,13 +176,14 @@ const Home = () => {
                              font-bold uppercase tracking-wider hover:bg-dark-700 transition-all duration-200 
                              border border-dark-500/50 hover:border-primary-500/50 clip-path-angular"
                     style={{
+                      clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))',
                       boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05)'
                     }}
                   >
                     Voir les outils
                   </TiltLink>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             </div>
           </div>
         </section>
@@ -144,41 +191,46 @@ const Home = () => {
         {/* Features Section */}
         <section className="py-20 border-t border-primary-500/20">
           <div className="container mx-auto px-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-8" staggerDelay={0.15}>
               {features.map((feature, index) => (
-                <div 
-                  key={index}
-                  className="group p-6 bg-dark-900/80 border border-dark-700/50 
-                           hover:border-primary-500/50 transition-all duration-300
-                           relative overflow-hidden backdrop-blur-sm card-hover-lift icon-bounce"
-                  style={{ 
-                    animationDelay: `${index * 100}ms`,
-                    clipPath: 'polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))'
-                  }}
-                >
-                  <div 
-                    className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-primary-500 via-transparent to-transparent 
-                                opacity-50 group-hover:opacity-100 transition-opacity duration-300"
-                    style={{ boxShadow: '0 0 10px rgba(0, 212, 255, 0.5)' }}
-                  />
-                  <div 
-                    className="w-12 h-12 bg-primary-500/10 border border-primary-500/30 flex items-center justify-center mb-4 transition-all duration-300 group-hover:bg-primary-500/20 group-hover:scale-110"
-                    style={{ clipPath: 'polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px))' }}
+                <StaggerItem key={index}>
+                  <motion.div 
+                    className="group p-6 bg-dark-900/80 border border-dark-700/50 
+                             hover:border-primary-500/50 transition-all duration-300
+                             relative overflow-hidden backdrop-blur-sm"
+                    style={{ 
+                      clipPath: 'polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))'
+                    }}
+                    whileHover={{ y: -8, scale: 1.02 }}
+                    transition={{ duration: 0.2 }}
                   >
-                    <svg className="w-6 h-6 text-primary-400 transition-all duration-300 group-hover:text-primary-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ filter: 'drop-shadow(0 0 5px rgba(0, 212, 255, 0.5))' }}>
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={feature.icon} />
-                    </svg>
-                  </div>
-                  <h3 
-                    className="text-lg font-bold text-white mb-2 uppercase tracking-wide font-display transition-all duration-300 group-hover:text-primary-300"
-                    style={{ textShadow: '0 0 10px rgba(0, 212, 255, 0.2)' }}
-                  >
-                    {feature.title}
-                  </h3>
-                  <p className="text-gray-400 text-sm font-medium">{feature.description}</p>
-                </div>
+                    <motion.div 
+                      className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-primary-500 via-transparent to-transparent"
+                      style={{ boxShadow: '0 0 10px rgba(0, 212, 255, 0.5)' }}
+                      initial={{ scaleX: 0, originX: 0 }}
+                      whileInView={{ scaleX: 1 }}
+                      transition={{ duration: 0.6, delay: index * 0.1 }}
+                    />
+                    <motion.div 
+                      className="w-12 h-12 bg-primary-500/10 border border-primary-500/30 flex items-center justify-center mb-4 transition-all duration-300 group-hover:bg-primary-500/20"
+                      style={{ clipPath: 'polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px))' }}
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                    >
+                      <svg className="w-6 h-6 text-primary-400 transition-all duration-300 group-hover:text-primary-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ filter: 'drop-shadow(0 0 5px rgba(0, 212, 255, 0.5))' }}>
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={feature.icon} />
+                      </svg>
+                    </motion.div>
+                    <h3 
+                      className="text-lg font-bold text-white mb-2 uppercase tracking-wide font-display transition-all duration-300 group-hover:text-primary-300"
+                      style={{ textShadow: '0 0 10px rgba(0, 212, 255, 0.2)' }}
+                    >
+                      {feature.title}
+                    </h3>
+                    <p className="text-gray-400 text-sm font-medium">{feature.description}</p>
+                  </motion.div>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
         </section>
 
@@ -187,24 +239,35 @@ const Home = () => {
           <div className="container mx-auto px-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
-                { value: '3', label: 'Modules' },
-                { value: 'TND', label: 'Devise' },
-                { value: '∞', label: 'Simulations' },
-                { value: '100%', label: 'Gratuit' },
+                { value: 3, label: 'Modules', isNumber: true },
+                { value: 'TND', label: 'Devise', isNumber: false },
+                { value: '∞', label: 'Simulations', isNumber: false },
+                { value: 100, label: 'Gratuit', isNumber: true, suffix: '%' },
               ].map((stat, index) => (
-                <div 
+                <motion.div 
                   key={index} 
-                  className="text-center p-6 hover-scale"
-                  style={{ animationDelay: `${index * 100}ms` }}
+                  className="text-center p-6"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={{ scale: 1.05 }}
                 >
                   <div 
                     className="text-3xl md:text-4xl font-bold text-primary-400 mb-2 font-display"
                     style={{ textShadow: '0 0 20px rgba(0, 212, 255, 0.4)' }}
                   >
-                    {stat.value}
+                    {stat.isNumber ? (
+                      <>
+                        <SlidingNumber value={stat.value} />
+                        {stat.suffix}
+                      </>
+                    ) : (
+                      stat.value
+                    )}
                   </div>
                   <div className="text-gray-500 uppercase tracking-wider text-sm">{stat.label}</div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>

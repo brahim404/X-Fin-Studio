@@ -11,6 +11,7 @@ const DatePicker = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [displayMonth, setDisplayMonth] = useState(value ? new Date(value) : new Date());
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
   const containerRef = useRef(null);
 
   const formatDate = (date) => {
@@ -93,6 +94,37 @@ const DatePicker = ({
     setDisplayMonth(new Date(displayMonth.getFullYear(), displayMonth.getMonth() + delta, 1));
   };
 
+  // Update dropdown position when opening
+  useEffect(() => {
+    if (isOpen && containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      const dropdownHeight = 380; // Approximate dropdown height
+      const viewportHeight = window.innerHeight;
+      const viewportWidth = window.innerWidth;
+      
+      // Calculate if dropdown should open above or below
+      const spaceBelow = viewportHeight - rect.bottom;
+      const spaceAbove = rect.top;
+      
+      let top;
+      if (spaceBelow >= dropdownHeight || spaceBelow >= spaceAbove) {
+        // Open below
+        top = rect.bottom + 8;
+      } else {
+        // Open above
+        top = rect.top - dropdownHeight - 8;
+      }
+      
+      // Ensure left position doesn't overflow viewport
+      let left = rect.left;
+      if (left + 288 > viewportWidth) {
+        left = viewportWidth - 288 - 16;
+      }
+      
+      setDropdownPosition({ top, left });
+    }
+  }, [isOpen]);
+
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (containerRef.current && !containerRef.current.contains(e.target)) {
@@ -139,13 +171,15 @@ const DatePicker = ({
         </svg>
       </div>
       
-      {/* Calendar dropdown */}
+      {/* Calendar dropdown - using portal-like positioning to avoid clipping */}
       {isOpen && (
         <div 
-          className="absolute z-50 mt-2 w-72 bg-dark-900 border border-dark-600 shadow-2xl animate-fade-in"
+          className="fixed z-[9999] w-72 bg-dark-900 border border-dark-600 shadow-2xl animate-fade-in"
           style={{
             clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))',
             boxShadow: '0 4px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 212, 255, 0.1)',
+            top: dropdownPosition.top,
+            left: dropdownPosition.left,
           }}
         >
           {/* Header */}

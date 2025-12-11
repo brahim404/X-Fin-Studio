@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 
 const TiltButton = ({ 
   children, 
@@ -12,6 +13,7 @@ const TiltButton = ({
   const buttonRef = useRef(null);
   const [tiltStyle, setTiltStyle] = useState({});
   const [glowPosition, setGlowPosition] = useState({ x: 50, y: 50 });
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseMove = (e) => {
     if (!buttonRef.current || disabled) return;
@@ -32,7 +34,6 @@ const TiltButton = ({
     
     setTiltStyle({
       transform: `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.02)`,
-      transition: 'transform 0.1s ease-out',
     });
     
     setGlowPosition({ x: glowX, y: glowY });
@@ -41,13 +42,15 @@ const TiltButton = ({
   const handleMouseLeave = () => {
     setTiltStyle({
       transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)',
-      transition: 'transform 0.3s ease-out',
     });
     setGlowPosition({ x: 50, y: 50 });
+    setIsHovered(false);
   };
 
-  const baseClasses = 'relative px-6 py-2.5 font-semibold uppercase tracking-wider transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed clip-path-angular overflow-hidden';
-  
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
   const variantClasses = {
     primary: 'bg-primary-600 text-white border border-primary-400/50',
     secondary: 'bg-dark-800 text-gray-200 border border-dark-500/50',
@@ -76,32 +79,49 @@ const TiltButton = ({
   };
 
   return (
-    <button
+    <motion.button
       ref={buttonRef}
       type={type}
       onClick={onClick}
       disabled={disabled}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={`${baseClasses} ${variantClasses[variant]} ${className}`}
+      onMouseEnter={handleMouseEnter}
+      className={`relative px-6 py-2.5 font-semibold uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden ${variantClasses[variant]} ${className}`}
       style={{
         ...tiltStyle,
-        boxShadow: shadowColors[variant],
+        clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))',
+        boxShadow: isHovered ? shadowColors[variant].replace('0.3', '0.5') : shadowColors[variant],
         textShadow: variant === 'primary' ? '0 0 10px rgba(0, 212, 255, 0.5)' : 
                     variant === 'accent' || variant === 'danger' ? '0 0 10px rgba(255, 0, 64, 0.5)' : 'none',
+        transition: 'transform 0.1s ease-out, box-shadow 0.2s ease-out',
       }}
+      whileTap={{ scale: disabled ? 1 : 0.98 }}
       {...props}
     >
       {/* Dynamic glow effect that follows cursor */}
-      <div 
-        className="absolute inset-0 pointer-events-none transition-opacity duration-200"
+      <motion.div 
+        className="absolute inset-0 pointer-events-none"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isHovered ? 1 : 0 }}
+        transition={{ duration: 0.2 }}
         style={{
           background: `radial-gradient(circle at ${glowPosition.x}% ${glowPosition.y}%, ${glowColors[variant]} 0%, transparent 60%)`,
-          opacity: tiltStyle.transform && tiltStyle.transform.includes('scale(1.02)') ? 1 : 0,
         }}
       />
       
-      {/* Shimmer effect on top edge */}
+      {/* Shimmer effect */}
+      <motion.div 
+        className="absolute inset-0 pointer-events-none"
+        initial={{ x: '-100%' }}
+        animate={{ x: isHovered ? '100%' : '-100%' }}
+        transition={{ duration: 0.6, ease: 'easeInOut' }}
+        style={{
+          background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent)',
+        }}
+      />
+      
+      {/* Top edge shimmer */}
       <div 
         className="absolute top-0 left-0 right-0 h-px pointer-events-none"
         style={{
@@ -110,7 +130,7 @@ const TiltButton = ({
       />
       
       <span className="relative z-10">{children}</span>
-    </button>
+    </motion.button>
   );
 };
 

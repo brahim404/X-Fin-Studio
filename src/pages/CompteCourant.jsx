@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Card from '../components/common/Card';
-import Input from '../components/common/Input';
-import Button from '../components/common/Button';
+import TiltButton from '../components/common/TiltButton';
+import RangeSlider from '../components/common/RangeSlider';
 import { FormulaSection } from '../components/common/Math';
 import { calculerAgios } from '../utils/finance/interetsSimples';
 import { formaterDevise, formaterPourcentage } from '../utils/helpers';
@@ -15,11 +15,10 @@ const CompteCourant = () => {
 
   const [results, setResults] = useState(null);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
+  const handleSliderChange = (name, value) => {
     setFormData((prev) => ({
       ...prev,
-      [name]: parseFloat(value) || 0,
+      [name]: value,
     }));
   };
 
@@ -47,46 +46,39 @@ const CompteCourant = () => {
           {/* Formulaire */}
           <Card className={`lg:col-span-1 transition-all duration-700 ease-out ${results ? '' : 'lg:max-w-xl lg:w-full'}`}>
             <form onSubmit={handleCalculate}>
-              <Input
-                label="Montant du Découvert (TND)"
-                type="number"
-                name="montantDecouvert"
+              <RangeSlider
+                label="Montant du Découvert"
                 value={formData.montantDecouvert}
-                onChange={handleInputChange}
-                min="0"
-                step="10"
-                required
+                onChange={(value) => handleSliderChange('montantDecouvert', value)}
+                min={0}
+                max={50000}
+                step={100}
+                formatValue={(v) => formaterDevise(v)}
               />
               
-              <Input
-                label="Taux d'Intérêt Annuel (%)"
-                type="number"
-                name="tauxAnnuel"
+              <RangeSlider
+                label="Taux d'Intérêt Annuel"
                 value={formData.tauxAnnuel}
-                onChange={handleInputChange}
-                min="0"
-                max="30"
-                step="0.1"
-                required
-                helperText="Taux débiteur appliqué par la banque"
+                onChange={(value) => handleSliderChange('tauxAnnuel', value)}
+                min={0}
+                max={25}
+                step={0.5}
+                unit="%"
               />
               
-              <Input
-                label="Nombre de Jours"
-                type="number"
-                name="nombreJours"
+              <RangeSlider
+                label="Durée du Découvert"
                 value={formData.nombreJours}
-                onChange={handleInputChange}
-                min="1"
-                max="365"
-                step="1"
-                required
-                helperText="Durée du découvert"
+                onChange={(value) => handleSliderChange('nombreJours', value)}
+                min={1}
+                max={365}
+                step={1}
+                formatValue={(v) => `${v} jour${v > 1 ? 's' : ''}`}
               />
               
-              <Button type="submit" className="w-full">
+              <TiltButton type="submit" className="w-full mt-4">
                 Calculer les Agios
-              </Button>
+              </TiltButton>
             </form>
           </Card>
 

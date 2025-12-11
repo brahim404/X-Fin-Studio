@@ -12,7 +12,8 @@ import {
 } from 'chart.js';
 import Card from '../components/common/Card';
 import Input from '../components/common/Input';
-import Button from '../components/common/Button';
+import TiltButton from '../components/common/TiltButton';
+import RangeSlider from '../components/common/RangeSlider';
 import { FormulaSection } from '../components/common/Math';
 import { calculerEpargneAvecVersements } from '../utils/finance/interetsSimples';
 import { formaterDevise, formaterPourcentage } from '../utils/helpers';
@@ -36,6 +37,13 @@ const Epargne = () => {
   });
 
   const [results, setResults] = useState(null);
+
+  const handleSliderChange = (name, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -119,55 +127,49 @@ const Epargne = () => {
           {/* Formulaire */}
           <Card className={`lg:col-span-1 transition-all duration-700 ease-out ${results ? '' : 'lg:max-w-xl lg:w-full'}`}>
             <form onSubmit={handleCalculate}>
-              <Input
-                label="Capital Initial (TND)"
-                type="number"
-                name="capitalInitial"
+              <RangeSlider
+                label="Capital Initial"
                 value={formData.capitalInitial}
-                onChange={handleInputChange}
-                min="0"
-                step="100"
-                required
+                onChange={(value) => handleSliderChange('capitalInitial', value)}
+                min={0}
+                max={100000}
+                step={500}
+                formatValue={(v) => formaterDevise(v)}
               />
               
-              <Input
-                label="Versement Mensuel (TND)"
-                type="number"
-                name="versementMensuel"
+              <RangeSlider
+                label="Versement Mensuel"
                 value={formData.versementMensuel}
-                onChange={handleInputChange}
-                min="0"
-                step="10"
-                required
+                onChange={(value) => handleSliderChange('versementMensuel', value)}
+                min={0}
+                max={2000}
+                step={10}
+                formatValue={(v) => formaterDevise(v)}
               />
               
-              <Input
-                label="Taux d'Intérêt Annuel (%)"
-                type="number"
-                name="tauxAnnuel"
+              <RangeSlider
+                label="Taux d'Intérêt Annuel"
                 value={formData.tauxAnnuel}
-                onChange={handleInputChange}
-                min="0"
-                max="20"
-                step="0.1"
-                required
+                onChange={(value) => handleSliderChange('tauxAnnuel', value)}
+                min={0}
+                max={15}
+                step={0.1}
+                unit="%"
               />
               
-              <Input
-                label="Durée (années)"
-                type="number"
-                name="dureeAnnees"
+              <RangeSlider
+                label="Durée"
                 value={formData.dureeAnnees}
-                onChange={handleInputChange}
-                min="1"
-                max="50"
-                step="1"
-                required
+                onChange={(value) => handleSliderChange('dureeAnnees', value)}
+                min={1}
+                max={40}
+                step={1}
+                formatValue={(v) => `${v} an${v > 1 ? 's' : ''}`}
               />
               
-              <Button type="submit" className="w-full">
+              <TiltButton type="submit" className="w-full mt-4">
                 Calculer
-              </Button>
+              </TiltButton>
             </form>
           </Card>
 

@@ -1,5 +1,61 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
+
+const TiltLink = ({ to, children, className, style, primary = false }) => {
+  const linkRef = useRef(null);
+  const [tiltStyle, setTiltStyle] = useState({});
+  const [glowPosition, setGlowPosition] = useState({ x: 50, y: 50 });
+
+  const handleMouseMove = (e) => {
+    if (!linkRef.current) return;
+    const rect = linkRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const tiltX = ((y - centerY) / centerY) * -6;
+    const tiltY = ((x - centerX) / centerX) * 6;
+    const glowX = (x / rect.width) * 100;
+    const glowY = (y / rect.height) * 100;
+    
+    setTiltStyle({
+      transform: `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.02)`,
+    });
+    setGlowPosition({ x: glowX, y: glowY });
+  };
+
+  const handleMouseLeave = () => {
+    setTiltStyle({ transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)' });
+    setGlowPosition({ x: 50, y: 50 });
+  };
+
+  return (
+    <Link
+      ref={linkRef}
+      to={to}
+      className={`relative overflow-hidden ${className}`}
+      style={{ ...style, ...tiltStyle, transition: 'transform 0.15s ease-out' }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div 
+        className="absolute inset-0 pointer-events-none transition-opacity duration-200"
+        style={{
+          background: `radial-gradient(circle at ${glowPosition.x}% ${glowPosition.y}%, ${primary ? 'rgba(0, 212, 255, 0.4)' : 'rgba(0, 212, 255, 0.2)'} 0%, transparent 60%)`,
+          opacity: tiltStyle.transform && tiltStyle.transform.includes('scale(1.02)') ? 1 : 0,
+        }}
+      />
+      <div 
+        className="absolute top-0 left-0 right-0 h-px pointer-events-none"
+        style={{
+          background: `linear-gradient(90deg, transparent, rgba(255,255,255,0.4) ${glowPosition.x}%, transparent)`,
+        }}
+      />
+      <span className="relative z-10">{children}</span>
+    </Link>
+  );
+};
 
 const Home = () => {
   const features = [
@@ -52,8 +108,9 @@ const Home = () => {
                 </p>
                 
                 <div className="flex flex-wrap gap-4">
-                  <Link
+                  <TiltLink
                     to="/epargne"
+                    primary
                     className="inline-flex items-center gap-2 bg-primary-600 text-white px-8 py-4 
                              font-bold uppercase tracking-wider hover:bg-primary-500 transition-all duration-200 
                              border border-primary-400/50 group clip-path-angular"
@@ -66,9 +123,9 @@ const Home = () => {
                     <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
-                  </Link>
-                  <Link
-                    to="/portefeuille"
+                  </TiltLink>
+                  <TiltLink
+                    to="/escompte"
                     className="inline-flex items-center gap-2 bg-dark-800 text-gray-200 px-8 py-4 
                              font-bold uppercase tracking-wider hover:bg-dark-700 transition-all duration-200 
                              border border-dark-500/50 hover:border-primary-500/50 clip-path-angular"
@@ -77,7 +134,7 @@ const Home = () => {
                     }}
                   >
                     Voir les outils
-                  </Link>
+                  </TiltLink>
                 </div>
               </div>
             </div>
@@ -93,7 +150,7 @@ const Home = () => {
                   key={index}
                   className="group p-6 bg-dark-900/80 border border-dark-700/50 
                            hover:border-primary-500/50 transition-all duration-300
-                           relative overflow-hidden backdrop-blur-sm"
+                           relative overflow-hidden backdrop-blur-sm card-hover-lift icon-bounce"
                   style={{ 
                     animationDelay: `${index * 100}ms`,
                     clipPath: 'polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))'
@@ -105,15 +162,15 @@ const Home = () => {
                     style={{ boxShadow: '0 0 10px rgba(0, 212, 255, 0.5)' }}
                   />
                   <div 
-                    className="w-12 h-12 bg-primary-500/10 border border-primary-500/30 flex items-center justify-center mb-4"
+                    className="w-12 h-12 bg-primary-500/10 border border-primary-500/30 flex items-center justify-center mb-4 transition-all duration-300 group-hover:bg-primary-500/20 group-hover:scale-110"
                     style={{ clipPath: 'polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px))' }}
                   >
-                    <svg className="w-6 h-6 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ filter: 'drop-shadow(0 0 5px rgba(0, 212, 255, 0.5))' }}>
+                    <svg className="w-6 h-6 text-primary-400 transition-all duration-300 group-hover:text-primary-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ filter: 'drop-shadow(0 0 5px rgba(0, 212, 255, 0.5))' }}>
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={feature.icon} />
                     </svg>
                   </div>
                   <h3 
-                    className="text-lg font-bold text-white mb-2 uppercase tracking-wide font-display"
+                    className="text-lg font-bold text-white mb-2 uppercase tracking-wide font-display transition-all duration-300 group-hover:text-primary-300"
                     style={{ textShadow: '0 0 10px rgba(0, 212, 255, 0.2)' }}
                   >
                     {feature.title}
@@ -130,13 +187,22 @@ const Home = () => {
           <div className="container mx-auto px-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
-                { value: '6', label: 'Modules' },
+                { value: '3', label: 'Modules' },
                 { value: 'TND', label: 'Devise' },
                 { value: '∞', label: 'Simulations' },
                 { value: '100%', label: 'Gratuit' },
               ].map((stat, index) => (
-                <div key={index} className="text-center p-6">
-                  <div className="text-3xl md:text-4xl font-bold text-primary-400 mb-2">{stat.value}</div>
+                <div 
+                  key={index} 
+                  className="text-center p-6 hover-scale"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <div 
+                    className="text-3xl md:text-4xl font-bold text-primary-400 mb-2 font-display"
+                    style={{ textShadow: '0 0 20px rgba(0, 212, 255, 0.4)' }}
+                  >
+                    {stat.value}
+                  </div>
                   <div className="text-gray-500 uppercase tracking-wider text-sm">{stat.label}</div>
                 </div>
               ))}

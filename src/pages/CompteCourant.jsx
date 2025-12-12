@@ -37,7 +37,7 @@ const CompteCourant = () => {
     <div className="min-h-screen py-8 relative">
       <div className="container mx-auto px-6">
         <div className="mb-8 animate-fade-in">
-          <h1 className="text-3xl font-bold text-white mb-2">Compte Courant - Agios</h1>
+          <h1 className="text-3xl font-bold text-accent-400 mb-2" style={{ textShadow: '0 0 20px rgba(255, 0, 64, 0.5)' }}>Compte Courant - Agios</h1>
           <p className="text-gray-400">
             Calculez les frais de découvert et agios pour votre compte courant
           </p>
@@ -118,9 +118,9 @@ const CompteCourant = () => {
                       </span>
                     </div>
                     
-                    <div className="flex justify-between items-center p-4 stat-card border-2 border-primary-500/50">
+                    <div className="flex justify-between items-center p-4 stat-card border-2 border-accent-500/50">
                       <span className="text-white font-semibold">Total des Agios</span>
-                      <span className="text-2xl font-bold text-primary-400">
+                      <span className="text-2xl font-bold text-accent-400">
                         {formaterDevise(results.total)}
                       </span>
                     </div>
@@ -156,7 +156,7 @@ const CompteCourant = () => {
                         </tr>
                         <tr className="bg-dark-700/50 font-semibold">
                           <td>Total à payer</td>
-                          <td className="text-right text-primary-400">{formaterDevise(results.total)}</td>
+                          <td className="text-right text-accent-400">{formaterDevise(results.total)}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -167,15 +167,15 @@ const CompteCourant = () => {
                 <Card colorTheme="accent" title="Conseils">
                   <ul className="space-y-2 text-sm text-gray-300">
                     <li className="flex items-start">
-                      <span className="text-green-400 mr-2">✓</span>
+                      <span className="text-accent-400 mr-2">✓</span>
                       <span>Évitez les découverts autant que possible pour minimiser les frais</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="text-green-400 mr-2">✓</span>
+                      <span className="text-accent-400 mr-2">✓</span>
                       <span>Négociez un taux de découvert autorisé avec votre banque</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="text-green-400 mr-2">✓</span>
+                      <span className="text-accent-400 mr-2">✓</span>
                       <span>Surveillez régulièrement votre solde pour éviter les frais</span>
                     </li>
                   </ul>

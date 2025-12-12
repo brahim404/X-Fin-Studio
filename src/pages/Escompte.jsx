@@ -107,7 +107,7 @@ const Escompte = () => {
     <div className="min-h-screen py-8 relative">
       <div className="container mx-auto px-6">
         <div className="mb-8 animate-fade-in">
-          <h1 className="text-3xl font-bold text-white mb-2">Escompte Commercial</h1>
+          <h1 className="text-3xl font-bold text-purple-400 mb-2" style={{ textShadow: '0 0 20px rgba(168, 85, 247, 0.5)' }}>Escompte Commercial</h1>
           <p className="text-gray-400">
             Générez un bordereau d'escompte détaillé avec calcul de la valeur actuelle de vos effets de commerce
           </p>
@@ -303,22 +303,22 @@ const Escompte = () => {
           <div className="xl:col-span-3 space-y-6 animate-slide-in-right">
               {/* Official Bordereau Document */}
               <div 
-                className="bg-gradient-to-br from-dark-900 via-dark-900 to-dark-800 border-2 border-primary-500/30 p-8 relative overflow-hidden"
+                className="bg-gradient-to-br from-dark-900 via-dark-900 to-dark-800 border-2 border-purple-500/30 p-8 relative overflow-hidden"
                 style={{ 
                   clipPath: 'polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px))',
-                  boxShadow: '0 0 40px rgba(0, 212, 255, 0.15), inset 0 0 100px rgba(0, 212, 255, 0.03)'
+                  boxShadow: '0 0 40px rgba(168, 85, 247, 0.15), inset 0 0 100px rgba(168, 85, 247, 0.03)'
                 }}
               >
                 {/* Decorative corner elements */}
-                <div className="absolute top-0 left-0 w-24 h-24 border-l-2 border-t-2 border-primary-500/30" />
+                <div className="absolute top-0 left-0 w-24 h-24 border-l-2 border-t-2 border-purple-500/30" />
                 <div className="absolute bottom-0 right-0 w-24 h-24 border-r-2 border-b-2 border-accent-500/30" />
                 
                 {/* Header */}
-                <div className="text-center mb-8 pb-6 border-b-2 border-primary-500/20 relative">
-                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-transparent via-primary-500 to-transparent" />
+                <div className="text-center mb-8 pb-6 border-b-2 border-purple-600/20 relative">
+                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent" />
                   <h2 
                     className="text-3xl font-bold text-white mb-2 font-display tracking-wider uppercase"
-                    style={{ textShadow: '0 0 30px rgba(0, 212, 255, 0.4)' }}
+                    style={{ textShadow: '0 0 30px rgba(168, 85, 247, 0.4)' }}
                   >
                     Bordereau d'Escompte
                   </h2>
@@ -326,11 +326,11 @@ const Escompte = () => {
                   <div className="flex justify-center gap-8 mt-4">
                     <div className="text-sm">
                       <span className="text-gray-500">Date de remise: </span>
-                      <span className="text-primary-400 font-bold">{formatDateDisplay(results.dateRemise)}</span>
+                      <span className="text-purple-400 font-bold">{formatDateDisplay(results.dateRemise)}</span>
                     </div>
                     <div className="text-sm">
                       <span className="text-gray-500">N° Bordereau: </span>
-                      <span className="text-primary-400 font-bold">BE-{Date.now().toString().slice(-6)}</span>
+                      <span className="text-purple-400 font-bold">BE-{Date.now().toString().slice(-6)}</span>
                     </div>
                   </div>
                 </div>
@@ -340,7 +340,7 @@ const Escompte = () => {
                   <div className="bg-dark-800/80 p-4 border border-dark-600/50 text-center"
                     style={{ clipPath: 'polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px))' }}>
                     <div className="text-xs text-gray-500 uppercase tracking-wider mb-1">Effets</div>
-                    <div className="text-2xl font-bold text-primary-400 font-display">{results.nombreEffets}</div>
+                    <div className="text-2xl font-bold text-purple-400 font-display">{results.nombreEffets}</div>
                   </div>
                   <div className="bg-dark-800/80 p-4 border border-dark-600/50 text-center"
                     style={{ clipPath: 'polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px))' }}>
@@ -357,9 +357,9 @@ const Escompte = () => {
                     <div className="text-xs text-gray-500 uppercase tracking-wider mb-1">Total Frais</div>
                     <div className="text-xl font-bold text-accent-400 font-display">{formaterDevise(results.totaux.totalFrais)}</div>
                   </div>
-                  <div className="bg-gradient-to-br from-primary-900/50 to-primary-800/30 p-4 border-2 border-primary-500/50 text-center"
-                    style={{ clipPath: 'polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px))', boxShadow: '0 0 20px rgba(0, 212, 255, 0.2)' }}>
-                    <div className="text-xs text-primary-300 uppercase tracking-wider mb-1">Valeur Nette</div>
+                  <div className="bg-gradient-to-br from-purple-900/50 to-purple-800/30 p-4 border-2 border-purple-500/50 text-center"
+                    style={{ clipPath: 'polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px))', boxShadow: '0 0 20px rgba(168, 85, 247, 0.2)' }}>
+                    <div className="text-xs text-purple-300 uppercase tracking-wider mb-1">Valeur Nette</div>
                     <div className="text-xl font-bold text-green-400 font-display">{formaterDevise(results.totaux.valeurNette)}</div>
                   </div>
                 </div>
@@ -369,15 +369,15 @@ const Escompte = () => {
                   <table className="w-full border-collapse">
                     <thead>
                       <tr className="bg-dark-800/80">
-                        <th className="px-3 py-3 text-left text-xs font-bold text-primary-400 uppercase tracking-wider border-b border-dark-600">N°</th>
-                        <th className="px-3 py-3 text-left text-xs font-bold text-primary-400 uppercase tracking-wider border-b border-dark-600">Tireur / Tiré</th>
-                        <th className="px-3 py-3 text-center text-xs font-bold text-primary-400 uppercase tracking-wider border-b border-dark-600">Échéance</th>
-                        <th className="px-3 py-3 text-center text-xs font-bold text-primary-400 uppercase tracking-wider border-b border-dark-600">Jours</th>
-                        <th className="px-3 py-3 text-right text-xs font-bold text-primary-400 uppercase tracking-wider border-b border-dark-600">Nominale</th>
-                        <th className="px-3 py-3 text-right text-xs font-bold text-primary-400 uppercase tracking-wider border-b border-dark-600">Escompte</th>
-                        <th className="px-3 py-3 text-right text-xs font-bold text-primary-400 uppercase tracking-wider border-b border-dark-600">Commission</th>
-                        <th className="px-3 py-3 text-right text-xs font-bold text-primary-400 uppercase tracking-wider border-b border-dark-600">Frais</th>
-                        <th className="px-3 py-3 text-right text-xs font-bold text-primary-400 uppercase tracking-wider border-b border-dark-600">Total Frais</th>
+                        <th className="px-3 py-3 text-left text-xs font-bold text-purple-400 uppercase tracking-wider border-b border-dark-600">N°</th>
+                        <th className="px-3 py-3 text-left text-xs font-bold text-purple-400 uppercase tracking-wider border-b border-dark-600">Tireur / Tiré</th>
+                        <th className="px-3 py-3 text-center text-xs font-bold text-purple-400 uppercase tracking-wider border-b border-dark-600">Échéance</th>
+                        <th className="px-3 py-3 text-center text-xs font-bold text-purple-400 uppercase tracking-wider border-b border-dark-600">Jours</th>
+                        <th className="px-3 py-3 text-right text-xs font-bold text-purple-400 uppercase tracking-wider border-b border-dark-600">Nominale</th>
+                        <th className="px-3 py-3 text-right text-xs font-bold text-purple-400 uppercase tracking-wider border-b border-dark-600">Escompte</th>
+                        <th className="px-3 py-3 text-right text-xs font-bold text-purple-400 uppercase tracking-wider border-b border-dark-600">Commission</th>
+                        <th className="px-3 py-3 text-right text-xs font-bold text-purple-400 uppercase tracking-wider border-b border-dark-600">Frais</th>
+                        <th className="px-3 py-3 text-right text-xs font-bold text-purple-400 uppercase tracking-wider border-b border-dark-600">Total Frais</th>
                         <th className="px-3 py-3 text-right text-xs font-bold text-green-400 uppercase tracking-wider border-b border-dark-600">Nette</th>
                       </tr>
                     </thead>
@@ -387,7 +387,7 @@ const Escompte = () => {
                           key={effet.numero} 
                           className={`transition-all duration-200 hover:bg-dark-700/50 ${index % 2 === 0 ? 'bg-dark-800/30' : 'bg-dark-800/10'}`}
                         >
-                          <td className="px-3 py-3 text-sm font-bold text-primary-400 border-b border-dark-700/50">{effet.numero}</td>
+                          <td className="px-3 py-3 text-sm font-bold text-purple-400 border-b border-dark-700/50">{effet.numero}</td>
                           <td className="px-3 py-3 border-b border-dark-700/50">
                             <div className="text-sm text-white font-medium">{effet.tireur || '-'}</div>
                             <div className="text-xs text-gray-500">{effet.tire || '-'}</div>
@@ -403,13 +403,13 @@ const Escompte = () => {
                         </tr>
                       ))}
                       <tr className="bg-dark-700/80 font-bold">
-                        <td colSpan="4" className="px-3 py-4 text-sm text-white uppercase border-t-2 border-primary-500/30">TOTAL</td>
-                        <td className="px-3 py-4 text-right text-sm text-white border-t-2 border-primary-500/30">{formaterDevise(results.totaux.valeurNominale)}</td>
-                        <td className="px-3 py-4 text-right text-sm text-orange-400 border-t-2 border-primary-500/30">{formaterDevise(results.totaux.escompte)}</td>
-                        <td className="px-3 py-4 text-right text-sm text-yellow-400 border-t-2 border-primary-500/30">{formaterDevise(results.totaux.commission)}</td>
-                        <td className="px-3 py-4 text-right text-sm text-gray-400 border-t-2 border-primary-500/30">{formaterDevise(results.totaux.fraisFixes)}</td>
-                        <td className="px-3 py-4 text-right text-sm text-accent-400 border-t-2 border-primary-500/30">{formaterDevise(results.totaux.totalFrais)}</td>
-                        <td className="px-3 py-4 text-right text-sm text-green-400 border-t-2 border-primary-500/30">{formaterDevise(results.totaux.valeurNette)}</td>
+                        <td colSpan="4" className="px-3 py-4 text-sm text-white uppercase border-t-2 border-purple-500/30">TOTAL</td>
+                        <td className="px-3 py-4 text-right text-sm text-white border-t-2 border-purple-500/30">{formaterDevise(results.totaux.valeurNominale)}</td>
+                        <td className="px-3 py-4 text-right text-sm text-orange-400 border-t-2 border-purple-500/30">{formaterDevise(results.totaux.escompte)}</td>
+                        <td className="px-3 py-4 text-right text-sm text-yellow-400 border-t-2 border-purple-500/30">{formaterDevise(results.totaux.commission)}</td>
+                        <td className="px-3 py-4 text-right text-sm text-gray-400 border-t-2 border-purple-500/30">{formaterDevise(results.totaux.fraisFixes)}</td>
+                        <td className="px-3 py-4 text-right text-sm text-accent-400 border-t-2 border-purple-500/30">{formaterDevise(results.totaux.totalFrais)}</td>
+                        <td className="px-3 py-4 text-right text-sm text-green-400 border-t-2 border-purple-500/30">{formaterDevise(results.totaux.valeurNette)}</td>
                       </tr>
                     </tbody>
                   </table>

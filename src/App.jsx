@@ -4,12 +4,10 @@ import { motion } from 'framer-motion';
 import Sidebar from './components/layout/Sidebar';
 import Footer from './components/layout/Footer';
 import Home from './pages/Home';
+import Tools from './pages/Tools';
 import Epargne from './pages/Epargne';
 import CompteCourant from './pages/CompteCourant';
 import Escompte from './pages/Escompte';
-import EmpruntIndivis from './pages/EmpruntIndivis';
-import EmpruntObligataire from './pages/EmpruntObligataire';
-import Portefeuille from './pages/Portefeuille';
 import { ParticlesBackground, Spotlight, AnimatedGridPattern, Meteors } from './components/animate-ui';
 
 function App() {
@@ -110,12 +108,10 @@ function App() {
           <main className="flex-grow">
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/tools" element={<Tools />} />
               <Route path="/epargne" element={<Epargne />} />
               <Route path="/compte-courant" element={<CompteCourant />} />
               <Route path="/escompte" element={<Escompte />} />
-              <Route path="/emprunt-indivis" element={<EmpruntIndivis />} />
-              <Route path="/emprunt-obligataire" element={<EmpruntObligataire />} />
-              <Route path="/portefeuille" element={<Portefeuille />} />
             </Routes>
           </main>
           <Footer />

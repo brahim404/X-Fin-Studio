@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Card from '../components/common/Card';
-import TiltButton from '../components/common/TiltButton';
-import RangeSlider from '../components/common/RangeSlider';
+import Input from '../components/common/Input';
+import Button from '../components/common/Button';
 import { FormulaSection } from '../components/common/Math';
 import { calculerAgios } from '../utils/finance/interetsSimples';
 import { formaterDevise, formaterPourcentage } from '../utils/helpers';
@@ -15,10 +15,11 @@ const CompteCourant = () => {
 
   const [results, setResults] = useState(null);
 
-  const handleSliderChange = (name, value) => {
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: parseFloat(value) || 0,
     }));
   };
 
@@ -44,41 +45,48 @@ const CompteCourant = () => {
 
         <div className={`grid grid-cols-1 gap-6 transition-all duration-700 ease-out ${results ? 'lg:grid-cols-3' : 'lg:grid-cols-1 max-w-xl mx-auto'}`}>
           {/* Formulaire */}
-          <Card className={`lg:col-span-1 transition-all duration-700 ease-out ${results ? '' : 'lg:max-w-xl lg:w-full'}`}>
+          <Card colorTheme="accent" className={`lg:col-span-1 transition-all duration-700 ease-out ${results ? '' : 'lg:max-w-xl lg:w-full'}`}>
             <form onSubmit={handleCalculate}>
-              <RangeSlider
-                label="Montant du Découvert"
+              <Input
+                label="Montant du Découvert (TND)"
+                type="number"
+                name="montantDecouvert"
                 value={formData.montantDecouvert}
-                onChange={(value) => handleSliderChange('montantDecouvert', value)}
-                min={0}
-                max={50000}
-                step={100}
-                formatValue={(v) => formaterDevise(v)}
+                onChange={handleInputChange}
+                min="0"
+                step="10"
+                required
               />
               
-              <RangeSlider
-                label="Taux d'Intérêt Annuel"
+              <Input
+                label="Taux d'Intérêt Annuel (%)"
+                type="number"
+                name="tauxAnnuel"
                 value={formData.tauxAnnuel}
-                onChange={(value) => handleSliderChange('tauxAnnuel', value)}
-                min={0}
-                max={25}
-                step={0.5}
-                unit="%"
+                onChange={handleInputChange}
+                min="0"
+                max="30"
+                step="0.1"
+                required
+                helperText="Taux débiteur appliqué par la banque"
               />
               
-              <RangeSlider
-                label="Durée du Découvert"
+              <Input
+                label="Nombre de Jours"
+                type="number"
+                name="nombreJours"
                 value={formData.nombreJours}
-                onChange={(value) => handleSliderChange('nombreJours', value)}
-                min={1}
-                max={365}
-                step={1}
-                formatValue={(v) => `${v} jour${v > 1 ? 's' : ''}`}
+                onChange={handleInputChange}
+                min="1"
+                max="365"
+                step="1"
+                required
+                helperText="Durée du découvert"
               />
               
-              <TiltButton type="submit" className="w-full mt-4">
+              <Button type="submit" variant="accent" className="w-full">
                 Calculer les Agios
-              </TiltButton>
+              </Button>
             </form>
           </Card>
 
@@ -87,7 +95,7 @@ const CompteCourant = () => {
           <div className="lg:col-span-2 space-y-6 animate-slide-in-right">
               <>
                 {/* Résumé */}
-                <Card title="Détail des Frais">
+                <Card colorTheme="accent" title="Détail des Frais">
                   <div className="space-y-4">
                     <div className="flex justify-between items-center p-4 stat-card">
                       <span className="text-gray-300">Montant du Découvert</span>
@@ -120,7 +128,7 @@ const CompteCourant = () => {
                 </Card>
 
                 {/* Récapitulatif */}
-                <Card title="Récapitulatif">
+                <Card colorTheme="accent" title="Récapitulatif">
                   <div className="overflow-x-auto">
                     <table className="table-dark">
                       <thead>
@@ -156,7 +164,7 @@ const CompteCourant = () => {
                 </Card>
 
                 {/* Conseils */}
-                <Card title="Conseils">
+                <Card colorTheme="accent" title="Conseils">
                   <ul className="space-y-2 text-sm text-gray-300">
                     <li className="flex items-start">
                       <span className="text-green-400 mr-2">✓</span>
@@ -174,7 +182,7 @@ const CompteCourant = () => {
                 </Card>
 
                 {/* Formules */}
-                <Card title="Formules Utilisées">
+                <Card colorTheme="accent" title="Formules Utilisées">
                   <FormulaSection
                     formulas={[
                       {

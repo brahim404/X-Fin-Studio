@@ -125,9 +125,10 @@ const Epargne = () => {
 
         <div className={`grid grid-cols-1 gap-6 transition-all duration-700 ease-out ${results ? 'lg:grid-cols-3' : 'lg:grid-cols-1 max-w-xl mx-auto'}`}>
           {/* Formulaire */}
-          <Card className={`lg:col-span-1 transition-all duration-700 ease-out ${results ? '' : 'lg:max-w-xl lg:w-full'}`}>
+          <Card colorTheme="primary" className={`lg:col-span-1 transition-all duration-700 ease-out ${results ? '' : 'lg:max-w-xl lg:w-full'}`}>
             <form onSubmit={handleCalculate}>
               <RangeSlider
+                colorTheme="primary"
                 label="Capital Initial"
                 value={formData.capitalInitial}
                 onChange={(value) => handleSliderChange('capitalInitial', value)}
@@ -138,6 +139,7 @@ const Epargne = () => {
               />
               
               <RangeSlider
+                colorTheme="primary"
                 label="Versement Mensuel"
                 value={formData.versementMensuel}
                 onChange={(value) => handleSliderChange('versementMensuel', value)}
@@ -148,6 +150,7 @@ const Epargne = () => {
               />
               
               <RangeSlider
+                colorTheme="primary"
                 label="Taux d'Intérêt Annuel"
                 value={formData.tauxAnnuel}
                 onChange={(value) => handleSliderChange('tauxAnnuel', value)}
@@ -158,6 +161,7 @@ const Epargne = () => {
               />
               
               <RangeSlider
+                colorTheme="primary"
                 label="Durée"
                 value={formData.dureeAnnees}
                 onChange={(value) => handleSliderChange('dureeAnnees', value)}
@@ -178,7 +182,7 @@ const Epargne = () => {
           <div className="lg:col-span-2 space-y-6 animate-slide-in-right">
               <>
                 {/* Résumé */}
-                <Card title="Résumé">
+                <Card colorTheme="primary" title="Résumé">
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div className="stat-card text-center">
                       <div className="text-sm text-gray-400 mb-1">Capital Final</div>
@@ -208,12 +212,12 @@ const Epargne = () => {
                 </Card>
 
                 {/* Graphique */}
-                <Card title="Évolution du Capital">
+                <Card colorTheme="primary" title="Évolution du Capital">
                   <Line data={chartData} options={chartOptions} />
                 </Card>
 
                 {/* Tableau */}
-                <Card title="Détail Année par Année">
+                <Card colorTheme="primary" title="Détail Année par Année">
                   <div className="overflow-x-auto">
                     <table className="table-dark">
                       <thead>
@@ -241,7 +245,7 @@ const Epargne = () => {
                 </Card>
 
                 {/* Formules */}
-                <Card title="Formules Utilisées">
+                <Card colorTheme="primary" title="Formules Utilisées">
                   <FormulaSection
                     formulas={[
                       {

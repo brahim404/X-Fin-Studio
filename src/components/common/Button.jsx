@@ -32,6 +32,12 @@ const Button = ({
       glow: 'rgba(255, 0, 64, 0.4)',
       textShadow: '0 0 10px rgba(255, 0, 64, 0.5)',
     },
+    purple: {
+      base: 'bg-purple-600 text-white border border-purple-400/50',
+      hover: 'hover:bg-purple-500',
+      glow: 'rgba(168, 85, 247, 0.4)',
+      textShadow: '0 0 10px rgba(168, 85, 247, 0.5)',
+    },
     outline: {
       base: 'border-2 border-primary-500 text-primary-400 bg-transparent',
       hover: 'hover:bg-primary-500/10',

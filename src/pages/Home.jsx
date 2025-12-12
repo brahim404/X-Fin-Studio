@@ -171,7 +171,7 @@ const Home = () => {
                     </svg>
                   </TiltLink>
                   <TiltLink
-                    to="/escompte"
+                    to="/tools"
                     className="inline-flex items-center gap-2 bg-dark-800 text-gray-200 px-8 py-4 
                              font-bold uppercase tracking-wider hover:bg-dark-700 transition-all duration-200 
                              border border-dark-500/50 hover:border-primary-500/50 clip-path-angular"

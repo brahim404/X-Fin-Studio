@@ -55,6 +55,7 @@ const TiltButton = ({
     primary: 'bg-primary-600 text-white border border-primary-400/50',
     secondary: 'bg-dark-800 text-gray-200 border border-dark-500/50',
     accent: 'bg-accent-600 text-white border border-accent-400/50',
+    purple: 'bg-purple-600 text-white border border-purple-400/50',
     outline: 'border-2 border-primary-500 text-primary-400 bg-transparent',
     danger: 'bg-accent-600 text-white border border-accent-400/50',
     ghost: 'text-gray-400 bg-transparent border-none',
@@ -64,6 +65,7 @@ const TiltButton = ({
     primary: 'rgba(0, 212, 255, 0.6)',
     secondary: 'rgba(0, 212, 255, 0.3)',
     accent: 'rgba(255, 0, 64, 0.6)',
+    purple: 'rgba(168, 85, 247, 0.6)',
     outline: 'rgba(0, 212, 255, 0.4)',
     danger: 'rgba(255, 0, 64, 0.6)',
     ghost: 'rgba(0, 212, 255, 0.2)',
@@ -73,6 +75,7 @@ const TiltButton = ({
     primary: '0 0 15px rgba(0,212,255,0.3), 0 4px 20px rgba(0,0,0,0.3)',
     secondary: '0 4px 20px rgba(0,0,0,0.3)',
     accent: '0 0 15px rgba(255,0,64,0.3), 0 4px 20px rgba(0,0,0,0.3)',
+    purple: '0 0 15px rgba(168,85,247,0.3), 0 4px 20px rgba(0,0,0,0.3)',
     outline: '0 4px 20px rgba(0,0,0,0.3)',
     danger: '0 0 15px rgba(255,0,64,0.3), 0 4px 20px rgba(0,0,0,0.3)',
     ghost: 'none',
@@ -93,7 +96,8 @@ const TiltButton = ({
         clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))',
         boxShadow: isHovered ? shadowColors[variant].replace('0.3', '0.5') : shadowColors[variant],
         textShadow: variant === 'primary' ? '0 0 10px rgba(0, 212, 255, 0.5)' : 
-                    variant === 'accent' || variant === 'danger' ? '0 0 10px rgba(255, 0, 64, 0.5)' : 'none',
+                    variant === 'accent' || variant === 'danger' ? '0 0 10px rgba(255, 0, 64, 0.5)' :
+                    variant === 'purple' ? '0 0 10px rgba(168, 85, 247, 0.5)' : 'none',
         transition: 'transform 0.1s ease-out, box-shadow 0.2s ease-out',
       }}
       whileTap={{ scale: disabled ? 1 : 0.98 }}

@@ -115,12 +115,12 @@ const Escompte = () => {
 
         <div className={`grid grid-cols-1 gap-6 transition-all duration-700 ease-out ${results ? 'xl:grid-cols-4' : 'lg:grid-cols-1 max-w-2xl mx-auto'}`}>
           {/* Formulaire */}
-          <Card className={`transition-all duration-700 ease-out ${results ? 'xl:col-span-1' : ''}`}>
+          <Card colorTheme="purple" className={`transition-all duration-700 ease-out ${results ? 'xl:col-span-1' : ''}`}>
             <form onSubmit={handleCalculate}>
               {/* Bank and Date Info */}
-              <div className="mb-6 p-4 bg-dark-800/50 border border-primary-500/20"
+              <div className="mb-6 p-4 bg-dark-800/50 border border-purple-500/20"
                 style={{ clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))' }}>
-                <h3 className="text-sm font-bold text-primary-400 uppercase tracking-wider mb-4">Informations Générales</h3>
+                <h3 className="text-sm font-bold text-purple-400 uppercase tracking-wider mb-4">Informations Générales</h3>
                 <Input
                   label="Nom de la Banque"
                   type="text"
@@ -140,6 +140,7 @@ const Escompte = () => {
                 style={{ clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))' }}>
                 <h3 className="text-sm font-bold text-gray-300 uppercase tracking-wider mb-4">Paramètres de Calcul</h3>
                 <RangeSlider
+                  colorTheme="purple"
                   label="Taux d'Escompte Annuel"
                   value={tauxAnnuel}
                   onChange={setTauxAnnuel}
@@ -149,6 +150,7 @@ const Escompte = () => {
                   unit="%"
                 />
                 <RangeSlider
+                  colorTheme="purple"
                   label="Taux de Commission"
                   value={tauxCommission}
                   onChange={setTauxCommission}
@@ -158,6 +160,7 @@ const Escompte = () => {
                   unit="%"
                 />
                 <RangeSlider
+                  colorTheme="purple"
                   label="Frais Fixes par Effet"
                   value={fraisFixes}
                   onChange={setFraisFixes}
@@ -173,15 +176,15 @@ const Escompte = () => {
                 <label className="block text-sm font-bold text-gray-300 mb-3 uppercase tracking-wider">
                   Effets de Commerce ({effets.length})
                 </label>
-                <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2">
+                <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 scrollbar-purple">
                   {effets.map((effet, index) => (
                     <div 
                       key={index} 
-                      className="p-4 bg-dark-700/50 border border-dark-600/50 transition-all duration-300 hover:border-primary-500/30"
+                      className="p-4 bg-dark-700/50 border border-dark-600/50 transition-all duration-300 hover:border-purple-500/30"
                       style={{ clipPath: 'polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px))' }}
                     >
                       <div className="flex justify-between items-center mb-3">
-                        <span className="text-sm font-bold text-primary-400">Effet #{index + 1}</span>
+                        <span className="text-sm font-bold text-purple-400">Effet #{index + 1}</span>
                         {effets.length > 1 && (
                           <button
                             type="button"
@@ -200,7 +203,7 @@ const Escompte = () => {
                           type="number"
                           value={effet.valeur}
                           onChange={(e) => handleEffetChange(index, 'valeur', e.target.value)}
-                          className="w-full px-3 py-2 bg-dark-800 border border-dark-600 text-gray-100 text-sm focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500 outline-none transition-all"
+                          className="w-full px-3 py-2 bg-dark-800 border border-dark-600 text-gray-100 text-sm focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 outline-none transition-all"
                           style={{ clipPath: 'polygon(0 0, calc(100% - 4px) 0, 100% 4px, 100% 100%, 4px 100%, 0 calc(100% - 4px))' }}
                           min="0"
                           step="100"
@@ -216,7 +219,7 @@ const Escompte = () => {
                             type="date"
                             value={effet.dateCreation}
                             onChange={(e) => handleEffetChange(index, 'dateCreation', e.target.value)}
-                            className="w-full px-2 py-1.5 bg-dark-800 border border-dark-600 text-gray-100 text-xs focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500 outline-none"
+                            className="w-full px-2 py-1.5 bg-dark-800 border border-dark-600 text-gray-100 text-xs focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 outline-none"
                           />
                         </div>
                         <div>
@@ -225,7 +228,7 @@ const Escompte = () => {
                             type="date"
                             value={effet.dateEcheance}
                             onChange={(e) => handleEffetChange(index, 'dateEcheance', e.target.value)}
-                            className="w-full px-2 py-1.5 bg-dark-800 border border-dark-600 text-gray-100 text-xs focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500 outline-none"
+                            className="w-full px-2 py-1.5 bg-dark-800 border border-dark-600 text-gray-100 text-xs focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 outline-none"
                           />
                         </div>
                       </div>
@@ -239,7 +242,7 @@ const Escompte = () => {
                             value={effet.tireur}
                             onChange={(e) => handleEffetChange(index, 'tireur', e.target.value)}
                             placeholder="Nom du tireur"
-                            className="w-full px-2 py-1.5 bg-dark-800 border border-dark-600 text-gray-100 text-xs focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500 outline-none"
+                            className="w-full px-2 py-1.5 bg-dark-800 border border-dark-600 text-gray-100 text-xs focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 outline-none"
                           />
                         </div>
                         <div>
@@ -249,7 +252,7 @@ const Escompte = () => {
                             value={effet.tire}
                             onChange={(e) => handleEffetChange(index, 'tire', e.target.value)}
                             placeholder="Nom du tiré"
-                            className="w-full px-2 py-1.5 bg-dark-800 border border-dark-600 text-gray-100 text-xs focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500 outline-none"
+                            className="w-full px-2 py-1.5 bg-dark-800 border border-dark-600 text-gray-100 text-xs focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 outline-none"
                           />
                         </div>
                       </div>
@@ -262,7 +265,7 @@ const Escompte = () => {
                           value={effet.lieuPaiement}
                           onChange={(e) => handleEffetChange(index, 'lieuPaiement', e.target.value)}
                           placeholder="Lieu de paiement"
-                          className="w-full px-2 py-1.5 bg-dark-800 border border-dark-600 text-gray-100 text-xs focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500 outline-none"
+                          className="w-full px-2 py-1.5 bg-dark-800 border border-dark-600 text-gray-100 text-xs focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 outline-none"
                         />
                       </div>
                       
@@ -270,7 +273,7 @@ const Escompte = () => {
                       <div className="mt-3 pt-3 border-t border-dark-600/50">
                         <div className="flex justify-between text-xs">
                           <span className="text-gray-500">Jours restants:</span>
-                          <span className="text-primary-400 font-bold">
+                          <span className="text-purple-400 font-bold">
                             {calculateDays(dateRemise, effet.dateEcheance)} jours
                           </span>
                         </div>
@@ -289,7 +292,7 @@ const Escompte = () => {
                 </TiltButton>
               </div>
 
-              <TiltButton type="submit" className="w-full">
+              <TiltButton type="submit" variant="purple" className="w-full">
                 Générer le Bordereau
               </TiltButton>
             </form>
@@ -455,7 +458,7 @@ const Escompte = () => {
               </div>
 
               {/* Formulas Card */}
-              <Card title="Formules Utilisées">
+              <Card colorTheme="purple" title="Formules Utilisées">
                 <FormulaSection
                   formulas={[
                     {

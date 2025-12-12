@@ -13,6 +13,7 @@ const DatePicker = ({
   const [displayMonth, setDisplayMonth] = useState(value ? new Date(value) : new Date());
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
   const containerRef = useRef(null);
+  const dropdownRef = useRef(null);
 
   const formatDate = (date) => {
     if (!date) return '';
@@ -127,7 +128,11 @@ const DatePicker = ({
 
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (containerRef.current && !containerRef.current.contains(e.target)) {
+      // Check if click is outside both the container AND the dropdown
+      const isOutsideContainer = containerRef.current && !containerRef.current.contains(e.target);
+      const isOutsideDropdown = dropdownRef.current && !dropdownRef.current.contains(e.target);
+      
+      if (isOutsideContainer && isOutsideDropdown) {
         setIsOpen(false);
       }
     };
@@ -174,6 +179,7 @@ const DatePicker = ({
       {/* Calendar dropdown - using portal-like positioning to avoid clipping */}
       {isOpen && (
         <div 
+          ref={dropdownRef}
           className="fixed z-[9999] w-72 bg-dark-900 border border-dark-600 shadow-2xl animate-fade-in"
           style={{
             clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))',

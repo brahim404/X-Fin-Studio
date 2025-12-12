@@ -10,6 +10,7 @@ const Card = ({
   variant = 'default',
   hover = true,
   glow = false,
+  colorTheme = 'primary', // 'primary' (blue), 'accent' (red), 'purple'
   ...props 
 }) => {
   const variantClasses = {
@@ -18,14 +19,47 @@ const Card = ({
     outlined: 'bg-transparent border-dark-600',
   };
 
+  // Color theme configurations
+  const themeColors = {
+    primary: {
+      gradient: 'from-primary-500 via-primary-400/80 to-transparent',
+      sideGradient: 'from-primary-500/50 via-transparent to-transparent',
+      glow: 'rgba(0, 212, 255, 0.5)',
+      glowLight: 'rgba(0, 212, 255, 0.15)',
+      glowSubtle: 'rgba(0, 212, 255, 0.1)',
+      radial: 'rgba(0, 212, 255, 0.05)',
+      textShadow: 'rgba(0, 212, 255, 0.3)',
+    },
+    accent: {
+      gradient: 'from-accent-500 via-accent-400/80 to-transparent',
+      sideGradient: 'from-accent-500/50 via-transparent to-transparent',
+      glow: 'rgba(255, 0, 64, 0.5)',
+      glowLight: 'rgba(255, 0, 64, 0.15)',
+      glowSubtle: 'rgba(255, 0, 64, 0.1)',
+      radial: 'rgba(255, 0, 64, 0.05)',
+      textShadow: 'rgba(255, 0, 64, 0.3)',
+    },
+    purple: {
+      gradient: 'from-purple-500 via-purple-400/80 to-transparent',
+      sideGradient: 'from-purple-500/50 via-transparent to-transparent',
+      glow: 'rgba(168, 85, 247, 0.5)',
+      glowLight: 'rgba(168, 85, 247, 0.15)',
+      glowSubtle: 'rgba(168, 85, 247, 0.1)',
+      radial: 'rgba(168, 85, 247, 0.05)',
+      textShadow: 'rgba(168, 85, 247, 0.3)',
+    },
+  };
+
+  const theme = themeColors[colorTheme] || themeColors.primary;
+
   return (
     <motion.div 
       className={`backdrop-blur-md border relative overflow-hidden ${variantClasses[variant]} ${className}`}
       style={{
         clipPath: 'polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))',
         boxShadow: glow 
-          ? '0 4px 30px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 212, 255, 0.15), inset 0 1px 0 rgba(0, 212, 255, 0.1)'
-          : '0 4px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(0, 212, 255, 0.1)'
+          ? `0 4px 30px rgba(0, 0, 0, 0.4), 0 0 30px ${theme.glowLight}, inset 0 1px 0 ${theme.glowSubtle}`
+          : `0 4px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 ${theme.glowSubtle}`
       }}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -35,8 +69,8 @@ const Card = ({
     >
       {/* Animated top accent line with glow */}
       <motion.div 
-        className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-primary-500 via-primary-400/80 to-transparent"
-        style={{ boxShadow: '0 0 15px rgba(0, 212, 255, 0.5)' }}
+        className={`absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r ${theme.gradient}`}
+        style={{ boxShadow: `0 0 15px ${theme.glow}` }}
         initial={{ scaleX: 0, originX: 0 }}
         animate={{ scaleX: 1 }}
         transition={{ duration: 0.6, delay: 0.2 }}
@@ -44,7 +78,7 @@ const Card = ({
       
       {/* Animated side accent */}
       <motion.div 
-        className="absolute bottom-0 right-0 w-[2px] h-full bg-gradient-to-t from-accent-500/50 via-transparent to-transparent"
+        className={`absolute bottom-0 right-0 w-[2px] h-full bg-gradient-to-t ${theme.sideGradient}`}
         initial={{ scaleY: 0, originY: 1 }}
         animate={{ scaleY: 1 }}
         transition={{ duration: 0.6, delay: 0.3 }}
@@ -55,9 +89,9 @@ const Card = ({
         className="absolute inset-0 pointer-events-none opacity-30"
         animate={{
           background: [
-            'radial-gradient(circle at 0% 0%, rgba(0, 212, 255, 0.05) 0%, transparent 50%)',
-            'radial-gradient(circle at 100% 100%, rgba(0, 212, 255, 0.05) 0%, transparent 50%)',
-            'radial-gradient(circle at 0% 0%, rgba(0, 212, 255, 0.05) 0%, transparent 50%)',
+            `radial-gradient(circle at 0% 0%, ${theme.radial} 0%, transparent 50%)`,
+            `radial-gradient(circle at 100% 100%, ${theme.radial} 0%, transparent 50%)`,
+            `radial-gradient(circle at 0% 0%, ${theme.radial} 0%, transparent 50%)`,
           ]
         }}
         transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
@@ -69,7 +103,7 @@ const Card = ({
             {title && (
               <motion.h3 
                 className="text-lg font-bold text-white font-display uppercase tracking-wide"
-                style={{ textShadow: '0 0 10px rgba(0, 212, 255, 0.3)' }}
+                style={{ textShadow: `0 0 10px ${theme.textShadow}` }}
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3, delay: 0.1 }}

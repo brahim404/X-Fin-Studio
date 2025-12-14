@@ -143,8 +143,8 @@ const Home = () => {
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.4 }}
                 >
-                  Outils de simulation professionnels pour l'épargne, les emprunts, 
-                  et la gestion de portefeuille en Dinar Tunisien.
+                  Outils de simulation professionnels pour l'épargne, les agios 
+                  et l'escompte en Dinar Tunisien.
                 </motion.p>
                 
                 <motion.div 

@@ -1,204 +1,166 @@
 # XFin Studio - Simulateur Financier Interactif
 
-Plateforme web interactive complète développée en React pour la simulation et l'analyse de divers instruments financiers en Dinar Tunisien (TND).
+Plateforme web interactive développée en React avec un design gaming moderne (Opera GX style) pour la simulation et l'analyse d'instruments financiers en Dinar Tunisien (TND).
 
-## Fonctionnalités
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
+![Vite](https://img.shields.io/badge/Vite-7.2-646CFF?logo=vite)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4-38B2AC?logo=tailwindcss)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-11-FF0055?logo=framer)
+
+## ✨ Fonctionnalités
 
 ### Modules Disponibles
 
-- **Compte d'Épargne** - Simulez l'évolution de votre épargne avec des versements mensuels
-- **Compte Courant** - Calculez les agios et frais de découvert
-- **Escompte Commercial** - Générez un bordereau d'escompte avec calcul de la valeur actuelle
-- **Emprunts Indivis** - Créez des tableaux d'amortissement (constant, linéaire, in fine)
-- **Emprunts Obligataires** - Simulez des émissions obligataires et leur service
-- **Gestion de Portefeuille** - Optimisez votre portefeuille avec la méthode de Markowitz
+- **💰 Compte d'Épargne** - Simulez l'évolution de votre épargne avec des versements mensuels et visualisez la croissance de votre capital
+- **🏦 Compte Courant (Agios)** - Calculez les frais de découvert et agios pour votre compte courant
+- **📄 Escompte Commercial** - Générez un bordereau d'escompte professionnel avec calcul détaillé de la valeur actuelle
 
 ### Caractéristiques Principales
 
-- Calculs en temps réel
-- Visualisations graphiques interactives avec Chart.js
-- Sauvegarde automatique dans le localStorage
-- Interface responsive (mobile, tablette, desktop)
-- Export des résultats en CSV
-- Design moderne avec Tailwind CSS
-- Devise : Dinar Tunisien (TND)
+- 🎮 **Design Gaming** - Interface moderne inspirée d'Opera GX avec effets néon et animations fluides
+- ⚡ **Calculs Instantanés** - Algorithmes optimisés pour des résultats en temps réel
+- 📊 **Formules Mathématiques** - Affichage des formules avec KaTeX pour une meilleure compréhension
+- 💾 **Sauvegarde Auto** - Données conservées localement dans le navigateur
+- 📱 **Responsive Design** - Interface adaptée mobile, tablette et desktop
+- 📥 **Export CSV** - Exportez vos résultats pour analyse externe
+- 🎨 **Thèmes Colorés** - Chaque module a sa propre identité visuelle (bleu, rouge, violet)
 
-## Installation
+## 🚀 Installation
 
 ### Prérequis
 
-- Node.js (version 16 ou supérieure)
+- Node.js (version 18 ou supérieure)
 - npm ou yarn
 
 ### Étapes d'installation
 
-Clonez le dépôt :
-
 ```bash
+# Clonez le dépôt
 git clone https://github.com/brahim404/X-Fin-Studio.git
 cd X-Fin-Studio
-```
 
-Installez les dépendances :
-
-```bash
+# Installez les dépendances
 npm install
-```
 
-Lancez le serveur de développement :
-
-```bash
+# Lancez le serveur de développement
 npm run dev
 ```
 
-Ouvrez votre navigateur à l'adresse indiquée (généralement `http://localhost:5173`)
+Ouvrez votre navigateur à l'adresse `http://localhost:5173`
 
-## Build pour la production
-
-Pour créer une version optimisée pour la production :
+## 🏗️ Build pour la production
 
 ```bash
+# Créer une version optimisée
 npm run build
+
+# Prévisualiser la version de production
+npm run preview
 ```
 
 Les fichiers seront générés dans le dossier `dist/`.
 
-Pour prévisualiser la version de production :
+## 🛠️ Technologies Utilisées
 
-```bash
-npm run preview
+| Technologie | Version | Utilisation |
+|-------------|---------|-------------|
+| React | 19 | Bibliothèque UI |
+| Vite | 7.2 | Build tool & dev server |
+| React Router | 7 | Navigation SPA |
+| Tailwind CSS | 3.4 | Styling utilitaire |
+| Framer Motion | 11 | Animations fluides |
+| KaTeX | - | Rendu des formules mathématiques |
+| Radix UI | - | Composants accessibles |
+
+## 📐 Formules Financières
+
+### Intérêts Simples (Épargne)
+
 ```
-
-## Technologies Utilisées
-
-- **React 18** - Bibliothèque UI
-- **Vite** - Build tool et dev server
-- **React Router** - Navigation
-- **Chart.js** et **react-chartjs-2** - Graphiques
-- **Tailwind CSS** - Styling
-- **LocalStorage API** - Persistance des données
-
-## Formules Financières Implémentées
-
-### Intérêts Simples
-
-```text
 I = C × t × n
 VA = C × (1 + t × n)
 ```
 
+### Agios (Compte Courant)
+
+```
+I = (M × t × j) / 365
+Commission = M × 0.0005
+Agios = I + Commission
+```
+
 ### Escompte Commercial
 
-```text
-E = V × t × n / 360
+```
+E = (V × t × n) / 360
 Valeur Actuelle = V - E - Commission - Frais
 ```
 
-### Annuités
+## 📁 Structure du Projet
 
-```text
-Mensualité = C × [t / (1 - (1+t)^-n)]
 ```
-
-### Portefeuille
-
-```text
-Rendement Portefeuille = Σ(wi × Ri)
-Volatilité = √(Σ Σ wi × wj × σi × σj × ρij)
-Ratio de Sharpe = (Rp - Rf) / σp
-```
-
-## Structure du Projet
-
-```text
 src/
 ├── components/
-│   ├── common/          # Composants réutilisables (Button, Input, Card)
-│   └── layout/          # Sidebar, Footer
-├── pages/               # Pages de chaque module
-│   ├── Home.jsx
-│   ├── Epargne.jsx
-│   ├── CompteCourant.jsx
-│   ├── Escompte.jsx
-│   ├── EmpruntIndivis.jsx
-│   ├── EmpruntObligataire.jsx
-│   └── Portefeuille.jsx
+│   ├── common/          # Composants réutilisables
+│   │   ├── Button.jsx
+│   │   ├── Card.jsx
+│   │   ├── Input.jsx
+│   │   ├── RangeSlider.jsx
+│   │   ├── DatePicker.jsx
+│   │   ├── TiltButton.jsx
+│   │   └── Math.jsx     # Composants KaTeX
+│   ├── layout/          # Layout (Sidebar, Header, Footer)
+│   └── animate-ui/      # Composants d'animation
+├── pages/
+│   ├── Home.jsx         # Page d'accueil
+│   ├── Tools.jsx        # Hub des outils
+│   ├── Epargne.jsx      # Simulateur d'épargne
+│   ├── CompteCourant.jsx # Calcul des agios
+│   └── Escompte.jsx     # Bordereau d'escompte
 ├── utils/
-│   ├── finance/         # Fonctions de calcul financier
+│   ├── finance/         # Fonctions de calcul
 │   │   ├── interetsSimples.js
 │   │   ├── annuites.js
-│   │   ├── escompte.js
-│   │   └── portefeuille.js
-│   └── helpers.js       # Fonctions utilitaires
-└── hooks/               # Custom React hooks
+│   │   └── escompte.js
+│   └── helpers.js       # Utilitaires (format, export)
+├── hooks/
+│   └── useLocalStorage.js
+├── index.css            # Styles globaux + Tailwind
+└── App.jsx              # Routeur principal
 ```
 
-## Utilisation
+## 🎯 Utilisation
 
 ### Navigation
 
-Utilisez la barre latérale pour accéder aux différents modules.
+1. **Page d'accueil** - Présentation et accès rapide aux outils
+2. **Hub Outils** - Vue d'ensemble des 3 modules avec cartes animées
+3. **Modules** - Interface dédiée pour chaque type de calcul
 
-### Simulation
+### Workflow Type
 
-1. Sélectionnez un module
+1. Sélectionnez un module depuis le hub ou la sidebar
 2. Remplissez les paramètres dans le formulaire
-3. Cliquez sur "Calculer" ou "Générer"
-4. Consultez les résultats, graphiques et tableaux
-5. Exportez les données si nécessaire
+3. Cliquez sur le bouton de calcul
+4. Consultez les résultats avec formules et détails
+5. Exportez en CSV si nécessaire
 
 ### Sauvegarde
 
-Vos simulations sont automatiquement sauvegardées dans le navigateur (localStorage) et seront disponibles lors de votre prochaine visite.
+Vos simulations sont automatiquement sauvegardées dans le navigateur (localStorage).
 
-## Exemple d'Utilisation
+## 🎨 Personnalisation des Thèmes
 
-### Compte d'Épargne
+Chaque module utilise un thème de couleur distinct :
 
-```text
-Capital Initial: 5000 TND
-Versement Mensuel: 200 TND
-Taux Annuel: 3%
-Durée: 10 ans
+- **Épargne** : 🔵 Bleu (primary)
+- **Compte Courant** : 🔴 Rouge (accent)
+- **Escompte** : 🟣 Violet (purple)
 
-→ Résultat: Capital final, graphique d'évolution, tableau année par année
-```
 
-### Emprunt Indivis
 
-```text
-Montant: 200000 TND
-Taux: 3.5%
-Durée: 20 ans
-Type: Annuités constantes
-
-→ Résultat: Tableau d'amortissement, graphiques, coût total
-```
-
-## Contribution
-
-Les contributions sont les bienvenues ! N'hésitez pas à :
-
-1. Fork le projet
-2. Créer une branche pour votre fonctionnalité (`git checkout -b feature/AmazingFeature`)
-3. Commit vos changements (`git commit -m 'Add some AmazingFeature'`)
-4. Push vers la branche (`git push origin feature/AmazingFeature`)
-5. Ouvrir une Pull Request
-
-## Licence
-
-Ce projet est sous licence MIT.
-
-## Auteur
+## 👤 Auteur
 
 **Brahim** - [@brahim404](https://github.com/brahim404)
 
-## Remerciements
-
-- Bibliothèque Chart.js pour les visualisations
-- Tailwind CSS pour le design system
-- La communauté React pour les outils et ressources
-
 ---
-
-**Note**: Cette application est destinée à des fins éducatives et de simulation. Les résultats ne constituent pas des conseils financiers professionnels.

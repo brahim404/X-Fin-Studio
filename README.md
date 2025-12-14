@@ -17,7 +17,6 @@ Plateforme web interactive développée en React avec un design gaming moderne (
 
 ### Caractéristiques Principales
 
-- 🎮 **Design Gaming** - Interface moderne inspirée d'Opera GX avec effets néon et animations fluides
 - ⚡ **Calculs Instantanés** - Algorithmes optimisés pour des résultats en temps réel
 - 📊 **Formules Mathématiques** - Affichage des formules avec KaTeX pour une meilleure compréhension
 - 💾 **Sauvegarde Auto** - Données conservées localement dans le navigateur
